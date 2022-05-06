@@ -1,0 +1,144 @@
+[
+        {
+                "inputs": [
+                        {
+                                "internalType": "address",
+                                "name": "t",
+                                "type": "address"
+                        },
+                        {
+                                "internalType": "address",
+                                "name": "p",
+                                "type": "address"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+        },
+        {
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "fallback"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "TokenNoPerApplication",
+                "outputs": [
+                        {
+                                "internalType": "uint256",
+                                "name": "",
+                                "type": "uint256"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "internalType": "address payable",
+                                "name": "userAddress",
+                                "type": "address"
+                        }
+                ],
+                "name": "applyEth",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "internalType": "address payable",
+                                "name": "userAddress",
+                                "type": "address"
+                        }
+                ],
+                "name": "applyFreeToken",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "internalType": "address",
+                                "name": "newPayer",
+                                "type": "address"
+                        }
+                ],
+                "name": "changePayer",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                        {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "payer",
+                "outputs": [
+                        {
+                                "internalType": "address",
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "token",
+                "outputs": [
+                        {
+                                "internalType": "contract IERC20",
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "internalType": "address",
+                                "name": "newOwner",
+                                "type": "address"
+                        }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        }
+]

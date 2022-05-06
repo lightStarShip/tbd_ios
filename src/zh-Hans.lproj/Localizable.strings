@@ -1,0 +1,150 @@
+/* 
+  Localizable.strings
+  Pirate
+
+  Created by hyperorchid on 2020/6/28.
+  Copyright © 2020 hyperorchid. All rights reserved.
+*/
+
+
+"Invalid ethereum config"="区块链配置无效";
+"Invalid abi file for ApplyToken"="无效的ABI文件";
+"Create contract[ApplyToken] from abi failed"="创建领取合约失败";
+"Open local test account to apply free token failed"="创建测试网免费领取合约失败";
+"Parse account's id to ed25519 public key failed"="解析节点地址失败";
+"Create shared aes key with node failed"="创建节点加密秘钥失败";
+"Convert pass word to data err:"="转换账号密码失败";
+"Random salt err:"="创建密文失败";
+"No json data to save"="账号json数据为空";
+"Empty account"="空账号";
+"Failed to open hop account"="打开通证账号失败";
+"Failed to open main adress"="打开主地址失败";
+
+"Approved"="审核通过";
+"Points Cost"="积分消耗比例";
+"Token no is too small"="通证数量过小";
+"Approving......"="审核中......";
+"Approving"="审核中......";
+"Approve failed"="审核失败";
+"Packaging at"="打包";
+"Buying packets......"="购买流量中......";
+"Failed"="失败";
+"Success"="成功";
+"Invalid account"="无效账号";
+"Invalid targe pool address"="无效矿池地址";
+
+"Parse data to bytes array failed"="sodium解释数据失败";
+
+"ms"="毫秒";
+
+"Chosing random node......" = "查找节点中......";
+"Ping......"="探测中......";
+"no bas"="无效域名";
+"Ping all nodes......"="探测所有节点";
+
+
+"Disconnected"="已断开";
+"Invalid"="无效";
+"Connected"="已连接";
+"Connecting"="连接中";
+"Disconnecting"="断开中";
+"Reconnecting"="正在重连";
+"unknown"="未知";
+
+
+"Choose your pool first"="请选择矿池";
+"Choose your node first"="请选择节点";
+"Create your account first"="请创建账号";
+"Account"="账号";
+"Open account"="打开账号";
+"Starting VPN"="开启VPN";
+
+
+"NAN"="未设置";
+"Hyper Orchid Protocol"="超级兰花协议";
+"HOP BlockChain -jack" = "兰花节点jack网络";
+"Hyper Orchid Protocol-jack" = "超级兰花协议jack网络";
+"no pool"="空的节点";
+
+
+"Packets"="流量";
+"Token"="通证";
+"Credit"="未结算";
+
+"Scanning not supported"="不支持扫码";
+"Your device does not support scanning a code from an item. Please use a device with a camera."="该设备尚未支持扫码功能";
+"OK"="确定";
+"Cancel"="取消";
+
+"Syncing......"="同步中......";
+"Loading....."="加载中......";
+"Options"="选项";
+"Create"="创建";
+"Please Select an Option"="请选择";
+"Import QR image"="导入二维码";
+"Scan QR Code"="扫描二维码";
+"Create new account...."="创建账号中......";
+"Create failed"="创建失败";
+"Create success"="创建成功";
+"Image not found!"="未找到二维码";
+"Parse image failed"="解析二维码失败";
+"Importing......"="导入中......";
+"Parse json data to account failed"="解析账号数据失败";
+"Author failed"="授权失败";
+
+"Apply failed"="申请失败";
+"HOP TX"="HOP 交易";
+"Create account or you have more than 1000 hop"="无账号或者HOP余额多于1000";
+"BlockChain"="区块链";
+"Creating TX......"="创建交易中......";
+"Eth TX"="燃料交易";
+"Create account or you have more than 0.1 eth"="无账号或者燃料余额多于0.1";
+
+
+"Password Confirmation!"="密码确认";
+"password"="密码";
+"Tips!"="提示";
+"Are you sure?"="确定?";
+"YES"="是";
+"NO"="否";
+
+"Days" = "天";
+"Replace your current account?"="覆盖当前账号?";
+"No valid wallet"="账号无效";
+"Copy Success"="复制成功";
+"Save success to your photo library"="成功保存到相册";
+"Exporting......"="正在导出......";
+
+
+"Pending"="挂起";
+"Apply GAS"="申请燃料";
+"Apply Token"="申请token";
+"Apply Service"="申请服务";
+"Unknown"="未知";
+"APP Authorization"="应用授权";
+
+"Choose one miner please"="请选择可用矿机";
+"Choose one pool please"="请选择可用矿池";
+"Insuffcient Founds"="余额不足";
+"Memship is invalid"="会员信息无效";
+"Confirm"="确认";
+"Replace current account"="覆盖当前账号";
+"No Valid Account"="无效的账号信息";
+"Import Account"="导入账号";
+"Password For Import"="用于导入的密码";
+"Import Failed"="导入失败";
+"Import Success"="导入成功";
+"Reloading Account Data"="重新加载账号数据";
+"Change Dns"="修改DNS配置";
+"DNS is invalid"="无效的DNS配置";
+"New Dns"="新的DNS地址";
+"Loading miners......"="加载矿机......";
+
+"No valid key data"="缺少账号私钥";
+"Invalid password"="无效密码";
+"Creating Account"="创建账号";
+"Unlock Account"="解锁账号";
+"Password"="密码";
+"Applying......"="申请中.....";
+"Opening......"="开打账号......";
+"Token No Too Small"="积分过少";

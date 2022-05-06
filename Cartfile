@@ -1,0 +1,6 @@
+github "hyperorchidlab/NEKit"
+github "hyperorchidlab/web3swift"
+github "hyperorchidlab/Curve25519"
+github "jdg/MBProgressHUD"
+github "swiftsocket/SwiftSocket"
+github "SwiftyJSON/SwiftyJSON" ~> 4.0
