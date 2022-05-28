@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B76CFF628419C6D00859B7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76CFF528419C6D00859B7C /* AppDelegate.swift */; };
 		2B76CFF828419C6D00859B7C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76CFF728419C6D00859B7C /* SceneDelegate.swift */; };
-		2B76CFFA28419C6D00859B7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76CFF928419C6D00859B7C /* ViewController.swift */; };
+		2B76CFFA28419C6D00859B7C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76CFF928419C6D00859B7C /* HomeViewController.swift */; };
 		2B76CFFD28419C6D00859B7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B76CFFB28419C6D00859B7C /* Main.storyboard */; };
 		2B76D00028419C6D00859B7C /* theBigDipper.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B76CFFE28419C6D00859B7C /* theBigDipper.xcdatamodeld */; };
 		2B76D00228419C6D00859B7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B76D00128419C6D00859B7C /* Assets.xcassets */; };
@@ -18,9 +18,11 @@
 		2B76D01A28419C6D00859B7C /* theBigDipperUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76D01928419C6D00859B7C /* theBigDipperUITests.swift */; };
 		2B76D01C28419C6D00859B7C /* theBigDipperUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76D01B28419C6D00859B7C /* theBigDipperUITestsLaunchTests.swift */; };
 		2B76D02B2841CAA200859B7C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B76D02A2841CAA200859B7C /* NetworkExtension.framework */; };
-		2B76D0322841D23700859B7C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B76D02A2841CAA200859B7C /* NetworkExtension.framework */; };
-		2B76D0352841D23700859B7C /* AppProxyProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76D0342841D23700859B7C /* AppProxyProvider.swift */; };
-		2B76D03A2841D23700859B7C /* vpn.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2B76D0312841D23700859B7C /* vpn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2B76D040284234CA00859B7C /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76D03F284234CA00859B7C /* AccountViewController.swift */; };
+		2B76D068284266BC00859B7C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B76D02A2841CAA200859B7C /* NetworkExtension.framework */; };
+		2B76D06B284266BC00859B7C /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76D06A284266BC00859B7C /* PacketTunnelProvider.swift */; };
+		2B76D070284266BC00859B7C /* vpn.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2B76D067284266BC00859B7C /* vpn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		2B76D0752842674100859B7C /* VpnManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B76D0742842674100859B7C /* VpnManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,11 +40,11 @@
 			remoteGlobalIDString = 2B76CFF128419C6D00859B7C;
 			remoteInfo = theBigDipper;
 		};
-		2B76D0382841D23700859B7C /* PBXContainerItemProxy */ = {
+		2B76D06E284266BC00859B7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2B76CFEA28419C6D00859B7C /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 2B76D0302841D23700859B7C;
+			remoteGlobalIDString = 2B76D066284266BC00859B7C;
 			remoteInfo = vpn;
 		};
 /* End PBXContainerItemProxy section */
@@ -54,7 +56,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				2B76D03A2841D23700859B7C /* vpn.appex in Embed App Extensions */,
+				2B76D070284266BC00859B7C /* vpn.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -65,7 +67,7 @@
 		2B76CFF228419C6D00859B7C /* theBigDipper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = theBigDipper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B76CFF528419C6D00859B7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B76CFF728419C6D00859B7C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2B76CFF928419C6D00859B7C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		2B76CFF928419C6D00859B7C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2B76CFFC28419C6D00859B7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2B76CFFF28419C6D00859B7C /* theBigDipper.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = theBigDipper.xcdatamodel; sourceTree = "<group>"; };
 		2B76D00128419C6D00859B7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -78,10 +80,12 @@
 		2B76D01B28419C6D00859B7C /* theBigDipperUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = theBigDipperUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		2B76D0282841CAA200859B7C /* theBigDipper.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = theBigDipper.entitlements; sourceTree = "<group>"; };
 		2B76D02A2841CAA200859B7C /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
-		2B76D0312841D23700859B7C /* vpn.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = vpn.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		2B76D0342841D23700859B7C /* AppProxyProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProxyProvider.swift; sourceTree = "<group>"; };
-		2B76D0362841D23700859B7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B76D0372841D23700859B7C /* vpn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vpn.entitlements; sourceTree = "<group>"; };
+		2B76D03F284234CA00859B7C /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		2B76D067284266BC00859B7C /* vpn.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = vpn.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B76D06A284266BC00859B7C /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		2B76D06C284266BC00859B7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2B76D06D284266BC00859B7C /* vpn.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = vpn.entitlements; sourceTree = "<group>"; };
+		2B76D0742842674100859B7C /* VpnManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,11 +111,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B76D02E2841D23700859B7C /* Frameworks */ = {
+		2B76D064284266BC00859B7C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B76D0322841D23700859B7C /* NetworkExtension.framework in Frameworks */,
+				2B76D068284266BC00859B7C /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,7 +128,7 @@
 				2B76CFF428419C6D00859B7C /* theBigDipper */,
 				2B76D00E28419C6D00859B7C /* theBigDipperTests */,
 				2B76D01828419C6D00859B7C /* theBigDipperUITests */,
-				2B76D0332841D23700859B7C /* vpn */,
+				2B76D069284266BC00859B7C /* vpn */,
 				2B76CFF328419C6D00859B7C /* Products */,
 				2B76D0292841CAA200859B7C /* Frameworks */,
 			);
@@ -136,7 +140,7 @@
 				2B76CFF228419C6D00859B7C /* theBigDipper.app */,
 				2B76D00B28419C6D00859B7C /* theBigDipperTests.xctest */,
 				2B76D01528419C6D00859B7C /* theBigDipperUITests.xctest */,
-				2B76D0312841D23700859B7C /* vpn.appex */,
+				2B76D067284266BC00859B7C /* vpn.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,12 +151,14 @@
 				2B76D0282841CAA200859B7C /* theBigDipper.entitlements */,
 				2B76CFF528419C6D00859B7C /* AppDelegate.swift */,
 				2B76CFF728419C6D00859B7C /* SceneDelegate.swift */,
-				2B76CFF928419C6D00859B7C /* ViewController.swift */,
+				2B76CFF928419C6D00859B7C /* HomeViewController.swift */,
+				2B76D03F284234CA00859B7C /* AccountViewController.swift */,
 				2B76CFFB28419C6D00859B7C /* Main.storyboard */,
 				2B76D00128419C6D00859B7C /* Assets.xcassets */,
 				2B76D00328419C6D00859B7C /* LaunchScreen.storyboard */,
 				2B76D00628419C6D00859B7C /* Info.plist */,
 				2B76CFFE28419C6D00859B7C /* theBigDipper.xcdatamodeld */,
+				2B76D0742842674100859B7C /* VpnManager.swift */,
 			);
 			path = theBigDipper;
 			sourceTree = "<group>";
@@ -182,12 +188,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2B76D0332841D23700859B7C /* vpn */ = {
+		2B76D069284266BC00859B7C /* vpn */ = {
 			isa = PBXGroup;
 			children = (
-				2B76D0342841D23700859B7C /* AppProxyProvider.swift */,
-				2B76D0362841D23700859B7C /* Info.plist */,
-				2B76D0372841D23700859B7C /* vpn.entitlements */,
+				2B76D06A284266BC00859B7C /* PacketTunnelProvider.swift */,
+				2B76D06C284266BC00859B7C /* Info.plist */,
+				2B76D06D284266BC00859B7C /* vpn.entitlements */,
 			);
 			path = vpn;
 			sourceTree = "<group>";
@@ -207,7 +213,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				2B76D0392841D23700859B7C /* PBXTargetDependency */,
+				2B76D06F284266BC00859B7C /* PBXTargetDependency */,
 			);
 			name = theBigDipper;
 			productName = theBigDipper;
@@ -250,13 +256,13 @@
 			productReference = 2B76D01528419C6D00859B7C /* theBigDipperUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		2B76D0302841D23700859B7C /* vpn */ = {
+		2B76D066284266BC00859B7C /* vpn */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2B76D03B2841D23700859B7C /* Build configuration list for PBXNativeTarget "vpn" */;
+			buildConfigurationList = 2B76D071284266BC00859B7C /* Build configuration list for PBXNativeTarget "vpn" */;
 			buildPhases = (
-				2B76D02D2841D23700859B7C /* Sources */,
-				2B76D02E2841D23700859B7C /* Frameworks */,
-				2B76D02F2841D23700859B7C /* Resources */,
+				2B76D063284266BC00859B7C /* Sources */,
+				2B76D064284266BC00859B7C /* Frameworks */,
+				2B76D065284266BC00859B7C /* Resources */,
 			);
 			buildRules = (
 			);
@@ -264,7 +270,7 @@
 			);
 			name = vpn;
 			productName = vpn;
-			productReference = 2B76D0312841D23700859B7C /* vpn.appex */;
+			productReference = 2B76D067284266BC00859B7C /* vpn.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -288,7 +294,7 @@
 						CreatedOnToolsVersion = 13.4;
 						TestTargetID = 2B76CFF128419C6D00859B7C;
 					};
-					2B76D0302841D23700859B7C = {
+					2B76D066284266BC00859B7C = {
 						CreatedOnToolsVersion = 13.4;
 					};
 				};
@@ -309,7 +315,7 @@
 				2B76CFF128419C6D00859B7C /* theBigDipper */,
 				2B76D00A28419C6D00859B7C /* theBigDipperTests */,
 				2B76D01428419C6D00859B7C /* theBigDipperUITests */,
-				2B76D0302841D23700859B7C /* vpn */,
+				2B76D066284266BC00859B7C /* vpn */,
 			);
 		};
 /* End PBXProject section */
@@ -339,7 +345,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B76D02F2841D23700859B7C /* Resources */ = {
+		2B76D065284266BC00859B7C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -354,7 +360,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B76D00028419C6D00859B7C /* theBigDipper.xcdatamodeld in Sources */,
-				2B76CFFA28419C6D00859B7C /* ViewController.swift in Sources */,
+				2B76D040284234CA00859B7C /* AccountViewController.swift in Sources */,
+				2B76D0752842674100859B7C /* VpnManager.swift in Sources */,
+				2B76CFFA28419C6D00859B7C /* HomeViewController.swift in Sources */,
 				2B76CFF628419C6D00859B7C /* AppDelegate.swift in Sources */,
 				2B76CFF828419C6D00859B7C /* SceneDelegate.swift in Sources */,
 			);
@@ -377,11 +385,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2B76D02D2841D23700859B7C /* Sources */ = {
+		2B76D063284266BC00859B7C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2B76D0352841D23700859B7C /* AppProxyProvider.swift in Sources */,
+				2B76D06B284266BC00859B7C /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,10 +406,10 @@
 			target = 2B76CFF128419C6D00859B7C /* theBigDipper */;
 			targetProxy = 2B76D01628419C6D00859B7C /* PBXContainerItemProxy */;
 		};
-		2B76D0392841D23700859B7C /* PBXTargetDependency */ = {
+		2B76D06F284266BC00859B7C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2B76D0302841D23700859B7C /* vpn */;
-			targetProxy = 2B76D0382841D23700859B7C /* PBXContainerItemProxy */;
+			target = 2B76D066284266BC00859B7C /* vpn */;
+			targetProxy = 2B76D06E284266BC00859B7C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -683,36 +691,7 @@
 			};
 			name = Release;
 		};
-		2B76D03C2841D23700859B7C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = vpn/vpn.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 6A53CAFMZ9;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = vpn/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = vpn;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.star.theBigDipper.vpn;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = tdb_dev_extension;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		2B76D03D2841D23700859B7C /* Release */ = {
+		2B76D072284266BC00859B7C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = vpn/vpn.entitlements;
@@ -724,7 +703,6 @@
 				INFOPLIST_FILE = vpn/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = vpn;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -734,6 +712,34 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.star.theBigDipper.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = tdb_realse_dec_24_extension;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2B76D073284266BC00859B7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = vpn/vpn.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6A53CAFMZ9;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = vpn/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = vpn;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.star.theBigDipper.vpn;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = tdb_dev_extension;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -780,11 +786,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2B76D03B2841D23700859B7C /* Build configuration list for PBXNativeTarget "vpn" */ = {
+		2B76D071284266BC00859B7C /* Build configuration list for PBXNativeTarget "vpn" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				2B76D03C2841D23700859B7C /* Debug */,
-				2B76D03D2841D23700859B7C /* Release */,
+				2B76D072284266BC00859B7C /* Debug */,
+				2B76D073284266BC00859B7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
