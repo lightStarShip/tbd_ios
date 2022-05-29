@@ -10,7 +10,6 @@ import NetworkExtension
 
 class HomeViewController: UIViewController {
         
-        var targetManager: NEVPNManager = NEVPNManager.shared()
         override func viewDidLoad() {
                 super.viewDidLoad()
         }
