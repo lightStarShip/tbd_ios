@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftyJSON
-import Simple
+import Starship
 
 class AdItem : NSObject {
         

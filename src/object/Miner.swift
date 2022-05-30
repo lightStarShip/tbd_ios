@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-import Simple
+import Starship
 import SwiftyJSON
 
 class Miner : NSObject {

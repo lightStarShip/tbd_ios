@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		2B0016A72835D88B00ED4DAC /* AdvertiseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B0016A62835D88B00ED4DAC /* AdvertiseView.xib */; };
 		2B0016A92835DA4A00ED4DAC /* AdItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0016A82835DA4A00ED4DAC /* AdItem.swift */; };
+		2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B30BFBC2844544600A74A83 /* starship.xcframework */; };
 		2B865BCA2835044700B57529 /* AdvertiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B865BC92835044700B57529 /* AdvertiseView.swift */; };
-		2B866E9828431F240038AC12 /* simple.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B866E9728431F240038AC12 /* simple.xcframework */; };
 		2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
 		2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
@@ -141,8 +141,8 @@
 		2B0016A62835D88B00ED4DAC /* AdvertiseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvertiseView.xib; sourceTree = "<group>"; };
 		2B0016A82835DA4A00ED4DAC /* AdItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItem.swift; sourceTree = "<group>"; };
 		2B30BFBB284441AE00A74A83 /* vpnRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = vpnRelease.entitlements; path = vpn/vpnRelease.entitlements; sourceTree = "<group>"; };
+		2B30BFBC2844544600A74A83 /* starship.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = starship.xcframework; path = bin/starship.xcframework; sourceTree = "<group>"; };
 		2B865BC92835044700B57529 /* AdvertiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseView.swift; sourceTree = "<group>"; };
-		2B866E9728431F240038AC12 /* simple.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = simple.xcframework; path = bin/simple.xcframework; sourceTree = "<group>"; };
 		691566C425356B8D004983F3 /* HOPIPRangeRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HOPIPRangeRule.swift; sourceTree = "<group>"; };
 		691CCF9F23F8240D007768DF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		6924223F240D368F00590536 /* MinerChooseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerChooseTableViewController.swift; sourceTree = "<group>"; };
@@ -223,7 +223,7 @@
 				6901E60D26858300007223E8 /* NEKit.xcframework in Frameworks */,
 				6901E5FB26858074007223E8 /* CocoaLumberjack.xcframework in Frameworks */,
 				6901E60B268581B1007223E8 /* Yaml.xcframework in Frameworks */,
-				2B866E9828431F240038AC12 /* simple.xcframework in Frameworks */,
+				2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */,
 				699BB8C72681E21600524FC6 /* CocoaAsyncSocket.xcframework in Frameworks */,
 				699BB8CF2681E22100524FC6 /* MBProgressHUD.xcframework in Frameworks */,
 				6901E607268581B1007223E8 /* Resolver.xcframework in Frameworks */,
@@ -251,7 +251,7 @@
 		691CCF9E23F8240D007768DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2B866E9728431F240038AC12 /* simple.xcframework */,
+				2B30BFBC2844544600A74A83 /* starship.xcframework */,
 				694FB2732682CF5A0024011A /* CocoaLumberjackSwift.xcframework */,
 				694FB2742682CF5A0024011A /* Resolver.xcframework */,
 				699BB8B72681CE1D00524FC6 /* CocoaLumberjack.xcframework */,
@@ -745,7 +745,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = src/simpleVPN.entitlements;
+				CODE_SIGN_ENTITLEMENTS = src/theBigDipper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
@@ -776,7 +776,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = src/simpleVPN.entitlements;
+				CODE_SIGN_ENTITLEMENTS = src/theBigDipper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
