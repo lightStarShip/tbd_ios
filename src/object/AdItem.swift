@@ -1,9 +1,9 @@
 //
 //  AdItem.swift
-//  SimpleVPN
+//  TBD
 //
 //  Created by wesley on 2022/5/19.
-//  Copyright © 2022 hyperorchid. All rights reserved.
+//  Copyright © 2022 lightStarShip. All rights reserved.
 //
 
 import Foundation

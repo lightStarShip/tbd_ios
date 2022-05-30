@@ -73,7 +73,7 @@
 		699BB8DD2681E22D00524FC6 /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88F2681CAA100524FC6 /* SwiftyJSON.xcframework */; };
 		699BB8DE2681E22D00524FC6 /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88F2681CAA100524FC6 /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		699BB9082681E30900524FC6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6940EC91240A756D0029F526 /* AVFoundation.framework */; };
-		69A47D6A240EB1DD00C86CFF /* SimpleVpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A47D69240EB1DD00C86CFF /* SimpleVpnService.swift */; };
+		69A47D6A240EB1DD00C86CFF /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A47D69240EB1DD00C86CFF /* ApiService.swift */; };
 		69A47D6F240EB8C100C86CFF /* HopMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A47D6E240EB8C100C86CFF /* HopMessage.swift */; };
 		69A47D70240EB8C100C86CFF /* HopMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A47D6E240EB8C100C86CFF /* HopMessage.swift */; };
 		69C112D42515DC7C00C5E9F5 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C112D32515DC7C00C5E9F5 /* Wallet.swift */; };
@@ -196,7 +196,7 @@
 		699BB8B72681CE1D00524FC6 /* CocoaLumberjack.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CocoaLumberjack.xcframework; path = Carthage/Build/CocoaLumberjack.xcframework; sourceTree = "<group>"; };
 		699BB8B82681CE1D00524FC6 /* lwip.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = lwip.xcframework; path = Carthage/Build/lwip.xcframework; sourceTree = "<group>"; };
 		699BB8B92681CE1D00524FC6 /* MMDB.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MMDB.xcframework; path = Carthage/Build/MMDB.xcframework; sourceTree = "<group>"; };
-		69A47D69240EB1DD00C86CFF /* SimpleVpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleVpnService.swift; sourceTree = "<group>"; };
+		69A47D69240EB1DD00C86CFF /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		69A47D6E240EB8C100C86CFF /* HopMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HopMessage.swift; sourceTree = "<group>"; };
 		69C112D32515DC7C00C5E9F5 /* Wallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
 		69D1DFA9240D7E8300D3BA30 /* MinerDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerDetailsTableViewCell.swift; sourceTree = "<group>"; };
@@ -360,7 +360,7 @@
 				698A513823FCE64E00836E26 /* HOPAdapter.swift */,
 				69980C5C23F7B3CD00829B09 /* Info.plist */,
 				69980C5D23F7B3CD00829B09 /* extension.entitlements */,
-				69A47D69240EB1DD00C86CFF /* SimpleVpnService.swift */,
+				69A47D69240EB1DD00C86CFF /* ApiService.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -562,7 +562,7 @@
 				69A47D70240EB8C100C86CFF /* HopMessage.swift in Sources */,
 				691566C525356B8D004983F3 /* HOPIPRangeRule.swift in Sources */,
 				69FA418B2404B352005CF3FA /* DataShareManager.swift in Sources */,
-				69A47D6A240EB1DD00C86CFF /* SimpleVpnService.swift in Sources */,
+				69A47D6A240EB1DD00C86CFF /* ApiService.swift in Sources */,
 				698A513B23FCE75700836E26 /* HOPAdapterFactory.swift in Sources */,
 				69980C5B23F7B3CD00829B09 /* PacketTunnelProvider.swift in Sources */,
 			);

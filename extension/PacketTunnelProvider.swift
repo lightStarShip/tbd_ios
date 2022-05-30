@@ -39,7 +39,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 }
 
                 do {
-                        try SimpleVpnService.pInst.setup(param: ops)
+                        try ApiService.pInst.setup(param: ops)
                         
                         try Utils.initDomains()
                         

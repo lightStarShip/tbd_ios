@@ -15,8 +15,8 @@ import SwiftyJSON
         func VPNShouldDone()
 }
 
-public class SimpleVpnService:NSObject{ 
-        public static var pInst = SimpleVpnService()
+public class ApiService:NSObject{ 
+        public static var pInst = ApiService()
         public var userSubAddress:String!
         public var minerAddress:String!
         public var minerIP:String!

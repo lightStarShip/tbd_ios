@@ -246,11 +246,11 @@ class HomeVC: UIViewController {
         
         func setupVPN(){
                 
-                targetManager?.localizedDescription = "SimpleVpn".locStr
+                targetManager?.localizedDescription = "The Big Dipper".locStr
                 targetManager?.isEnabled = true
                 
                 let providerProtocol = NETunnelProviderProtocol()
-                providerProtocol.serverAddress = "SimpleVpn".locStr
+                providerProtocol.serverAddress = "distribute server".locStr
                 targetManager?.protocolConfiguration = providerProtocol
                 
                 targetManager?.saveToPreferences { err in

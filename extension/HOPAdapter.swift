@@ -61,8 +61,8 @@ class HOPAdapter: AdapterSocket {
         var objID:Int
         
         public init(ID:Int) {
-                self.serverHost = SimpleVpnService.pInst.minerIP
-                self.serverPort = SimpleVpnService.pInst.minerPort
+                self.serverHost = ApiService.pInst.minerIP
+                self.serverPort = ApiService.pInst.minerPort
                 self.objID = ID
                 super.init()
                 
@@ -80,7 +80,7 @@ class HOPAdapter: AdapterSocket {
                 internalStatus = .connecting
                 do {
                         self.salt = HopMessage.generateRandomBytes(size: HopConstants.SALT_LEN)!
-                        let key = SimpleVpnService.pInst.P2pKey()
+                        let key = ApiService.pInst.P2pKey()
                         self.aesKey = try AES(key: key,
                                               blockMode: CFB(iv: self.salt!.bytes),
                                               padding:.noPadding)
@@ -99,7 +99,7 @@ class HOPAdapter: AdapterSocket {
         
         override public func didConnectWith(socket: RawTCPSocketProtocol) {
                 let setup_Data = try? HopMessage.SetupMsg(iv:self.salt!,
-                                        subAddr: SimpleVpnService.pInst.userSubAddress)
+                                        subAddr: ApiService.pInst.userSubAddress)
                 
                 guard let syn_data = setup_Data else{
 //                        observer?.signal(.errorOccured(HopError.msg("invalid setup message to miner"), on: self))
