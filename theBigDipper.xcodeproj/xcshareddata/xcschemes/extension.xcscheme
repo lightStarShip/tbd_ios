@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "69980C5723F7B3CD00829B09"
-               BuildableName = "extension.appex"
+               BuildableName = "vpn.appex"
                BlueprintName = "vpn"
                ReferencedContainer = "container:theBigDipper.xcodeproj">
             </BuildableReference>
@@ -30,7 +30,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "69980C2423F78D3E00829B09"
-               BuildableName = "SimpleVPN.app"
+               BuildableName = "theBigDipper.app"
                BlueprintName = "theBigDipper"
                ReferencedContainer = "container:theBigDipper.xcodeproj">
             </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69980C2423F78D3E00829B09"
-            BuildableName = "SimpleVPN.app"
+            BuildableName = "theBigDipper.app"
             BlueprintName = "theBigDipper"
             ReferencedContainer = "container:theBigDipper.xcodeproj">
          </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69980C5723F7B3CD00829B09"
-            BuildableName = "extension.appex"
+            BuildableName = "vpn.appex"
             BlueprintName = "vpn"
             ReferencedContainer = "container:theBigDipper.xcodeproj">
          </BuildableReference>
@@ -97,7 +97,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "69980C2423F78D3E00829B09"
-            BuildableName = "SimpleVPN.app"
+            BuildableName = "theBigDipper.app"
             BlueprintName = "theBigDipper"
             ReferencedContainer = "container:theBigDipper.xcodeproj">
          </BuildableReference>

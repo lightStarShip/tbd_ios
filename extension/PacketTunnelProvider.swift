@@ -73,19 +73,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                 if (self.enablePacketProcessing){
                                         self.interface = TUNInterface(packetFlow: self.packetFlow)
                                         
-                                        let fakeIPPool = try! IPPool(range: IPRange(startIP: IPAddress(fromString: "198.18.1.1")!, endIP: IPAddress(fromString: "198.18.255.255")!))
-                                        
-                                        
-                                        let dnsServer = DNSServer(address: IPAddress(fromString: "198.18.0.1")!, port: NEKit.Port(port: 53), fakeIPPool: fakeIPPool)
-                                        let resolver = UDPDNSResolver(address: IPAddress(fromString: "8.8.8.8")!, port: NEKit.Port(port: 53))
-                                        dnsServer.registerResolver(resolver)
-                                        self.interface.register(stack: dnsServer)
-                                        
-                                        DNSServer.currentServer = dnsServer
-                                        
-                                        let udpStack = UDPDirectStack()
-                                        self.interface.register(stack: udpStack)
-                                        
                                         let tcpStack = TCPStack.stack
                                         tcpStack.proxyServer = self.proxyServer
                                         self.interface.register(stack:tcpStack)
