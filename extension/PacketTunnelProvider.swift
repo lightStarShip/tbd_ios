@@ -132,11 +132,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 let hopRule = HOPDomainsRule(adapterFactory: hopAdapterFactory, urls: Utils.Domains)
                 
                 var ipStrings:[String] = []
-                ipStrings.append(contentsOf: Utils.IPRange["line"] as! [String])
                 ipStrings.append(contentsOf: Utils.IPRange["tel"] as! [String])
-                ipStrings.append(contentsOf: Utils.IPRange["whatsapp"] as! [String])
-                ipStrings.append(contentsOf: Utils.IPRange["snap"] as! [String])
-                ipStrings.append(contentsOf: Utils.IPRange["netfix"] as! [String])
                 let ipRange = try HOPIPRangeRule(adapterFactory: hopAdapterFactory, ranges: ipStrings)
 //                NSLog("--------->\(ipStrings)")
                 RuleManager.currentManager = RuleManager(fromRules: [hopRule, ipRange], appendDirect: true)
