@@ -24,7 +24,7 @@ class Utils: NSObject {
                 }
                 
                 guard let dic = NSDictionary(contentsOfFile: url) as? [String:NSObject],
-//                      let cnDic = dic["TEST"] as? [String:NSObject] else{
+                      //                      let cnDic = dic["TEST"] as? [String:NSObject] else{
                       let cnDic = dic["CN"] as? [String:NSObject] else{
                         throw HopError.hopProtocol("gfw file ")
                 }
@@ -43,30 +43,40 @@ class Utils: NSObject {
                 Utils.Exclusives = ex
                 Utils.Domains = domains
                 Utils.IPRange = ips
+                
+                
         } 
-        
-        static func getJavascriptProxyForRules (domains:Array<String>, address:String, port:String) -> String {
-            
-            if domains.count == 0 {
-                return "function FindProxyForURL(url, host) { return \"DIRECT\";}"
-            }
-            else {
-                
-                //forced URLs to go through VPN (right now just IP address to show to user)
-                let forcedVPNConditions = "dnsDomainIs(host, \"ip.confirmedvpn.com\")"
-                
-                var conditions = ""
-                for (index, domain) in domains.enumerated() {
-                    if index > 0 {
-                        conditions = conditions + " || "
-                    }
-                    let formattedDomain = domain.replacingOccurrences(of: "*.", with: "")
-                        NSLog("formattedDomain=\(formattedDomain)")
-                    conditions = conditions + "dnsDomainIs(host, \"" + formattedDomain + "\")"
+        static func initJavaScript() throws{
+                guard let jsUrl = Bundle.main.path(forResource: "gfw", ofType: "js") else{
+                        throw HopError.hopProtocol("no gfw js")
                 }
                 
-                return "function FindProxyForURL(url, host) { if (\(forcedVPNConditions)) { return \"DIRECT\";} else if (\(conditions)) { return \"PROXY \(address):\(port); DIRECT\"; } return \"DIRECT\";}"
-            }
+                let jsStr = try String.init(contentsOfFile: jsUrl)
+                
+                JavaScriptString = jsStr
+        }
+        static func getJavascriptProxyForRules (domains:Array<String>, address:String, port:String) -> String {
+                
+                if domains.count == 0 {
+                        return "function FindProxyForURL(url, host) { return \"DIRECT\";}"
+                }
+                else {
+                        
+                        //forced URLs to go through VPN (right now just IP address to show to user)
+                        let forcedVPNConditions = "dnsDomainIs(host, \"ip.confirmedvpn.com\")"
+                        
+                        var conditions = ""
+                        for (index, domain) in domains.enumerated() {
+                                if index > 0 {
+                                        conditions = conditions + " || "
+                                }
+                                let formattedDomain = domain.replacingOccurrences(of: "*.", with: "")
+                                NSLog("formattedDomain=\(formattedDomain)")
+                                conditions = conditions + "dnsDomainIs(host, \"" + formattedDomain + "\")"
+                        }
+                        
+                        return "function FindProxyForURL(url, host) { if (\(forcedVPNConditions)) { return \"DIRECT\";} else if (\(conditions)) { return \"PROXY \(address):\(port); DIRECT\"; } return \"DIRECT\";}"
+                }
         }
         
         static func generateQRCode(from message: String) -> CIImage? {
@@ -77,7 +87,7 @@ class Utils: NSObject {
                 
                 guard let qr = CIFilter(name: "CIQRCodeGenerator",
                                         parameters: ["inputMessage":
-                                                data, "inputCorrectionLevel":"H"]) else{
+                                                        data, "inputCorrectionLevel":"H"]) else{
                         return nil
                 }
                 
@@ -102,7 +112,7 @@ extension Data{
                 return len
         }
 }
-        
+
 public func DataWithLen(data:Data) -> Data {
         let data_len = Int32(data.count)
         let len_data = withUnsafeBytes(of: data_len.bigEndian, Array.init)
@@ -112,16 +122,16 @@ public func DataWithLen(data:Data) -> Data {
 }
 
 extension Formatter {
-    static let date = DateFormatter()
+        static let date = DateFormatter()
 }
 
 extension Date {
-    var stringVal : String {
-        Formatter.date.calendar = Calendar(identifier: .iso8601)
-        Formatter.date.timeZone = .current
-        Formatter.date.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSZZZZZ"
-        return Formatter.date.string(from: self)
-    }
+        var stringVal : String {
+                Formatter.date.calendar = Calendar(identifier: .iso8601)
+                Formatter.date.timeZone = .current
+                Formatter.date.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSZZZZZ"
+                return Formatter.date.string(from: self)
+        }
 }
 
 
@@ -133,34 +143,34 @@ extension String {
         func isValidIP() -> Bool {
                 let parts = self.split(separator: ".")// .componentsSeparatedByString(".")
                 let nums = parts.compactMap { Int($0) }
-            return parts.count == 4 && nums.count == 4 && nums.filter { $0 >= 0 && $0 < 256}.count == 4
+                return parts.count == 4 && nums.count == 4 && nums.filter { $0 >= 0 && $0 < 256}.count == 4
         }
 }
 
 extension UIColor {
-    public convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
-
-        if hex.hasPrefix("#") {
-            let start = hex.index(hex.startIndex, offsetBy: 1)
-            let hexColor = String(hex[start...])
-
-            if hexColor.count == 8 {
-                let scanner = Scanner(string: hexColor)
-                var hexNumber: UInt64 = 0
-
-                if scanner.scanHexInt64(&hexNumber) {
-                    r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
-                    g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
-                    b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
-                    a = CGFloat(hexNumber & 0x000000ff) / 255
-
-                    self.init(red: r, green: g, blue: b, alpha: a)
-                    return
+        public convenience init?(hex: String) {
+                let r, g, b, a: CGFloat
+                
+                if hex.hasPrefix("#") {
+                        let start = hex.index(hex.startIndex, offsetBy: 1)
+                        let hexColor = String(hex[start...])
+                        
+                        if hexColor.count == 8 {
+                                let scanner = Scanner(string: hexColor)
+                                var hexNumber: UInt64 = 0
+                                
+                                if scanner.scanHexInt64(&hexNumber) {
+                                        r = CGFloat((hexNumber & 0xff000000) >> 24) / 255
+                                        g = CGFloat((hexNumber & 0x00ff0000) >> 16) / 255
+                                        b = CGFloat((hexNumber & 0x0000ff00) >> 8) / 255
+                                        a = CGFloat(hexNumber & 0x000000ff) / 255
+                                        
+                                        self.init(red: r, green: g, blue: b, alpha: a)
+                                        return
+                                }
+                        }
                 }
-            }
+                
+                return nil
         }
-
-        return nil
-    }
 }

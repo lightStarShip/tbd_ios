@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		2B0016A72835D88B00ED4DAC /* AdvertiseView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B0016A62835D88B00ED4DAC /* AdvertiseView.xib */; };
 		2B0016A92835DA4A00ED4DAC /* AdItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0016A82835DA4A00ED4DAC /* AdItem.swift */; };
+		2B0796282849A1F40034E09A /* gfw.js in Resources */ = {isa = PBXBuildFile; fileRef = 2B0796272849A1F40034E09A /* gfw.js */; };
+		2B0796292849A1F40034E09A /* gfw.js in Resources */ = {isa = PBXBuildFile; fileRef = 2B0796272849A1F40034E09A /* gfw.js */; };
+		2B07962B284A27F40034E09A /* LocalProxyServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B07962A284A27F40034E09A /* LocalProxyServer.swift */; };
+		2B07962C284A2AAD0034E09A /* CocoaAsyncSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8752681CA6000524FC6 /* CocoaAsyncSocket.xcframework */; };
+		2B079630284A3BF90034E09A /* SOCKS5LocalSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B07962F284A3BF90034E09A /* SOCKS5LocalSocket.swift */; };
 		2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B30BFBC2844544600A74A83 /* starship.xcframework */; };
 		2B865BCA2835044700B57529 /* AdvertiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B865BC92835044700B57529 /* AdvertiseView.swift */; };
 		2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
@@ -140,6 +145,9 @@
 /* Begin PBXFileReference section */
 		2B0016A62835D88B00ED4DAC /* AdvertiseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvertiseView.xib; sourceTree = "<group>"; };
 		2B0016A82835DA4A00ED4DAC /* AdItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItem.swift; sourceTree = "<group>"; };
+		2B0796272849A1F40034E09A /* gfw.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = gfw.js; sourceTree = "<group>"; };
+		2B07962A284A27F40034E09A /* LocalProxyServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalProxyServer.swift; sourceTree = "<group>"; };
+		2B07962F284A3BF90034E09A /* SOCKS5LocalSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SOCKS5LocalSocket.swift; sourceTree = "<group>"; };
 		2B30BFBB284441AE00A74A83 /* vpnRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = vpnRelease.entitlements; path = vpn/vpnRelease.entitlements; sourceTree = "<group>"; };
 		2B30BFBC2844544600A74A83 /* starship.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = starship.xcframework; path = bin/starship.xcframework; sourceTree = "<group>"; };
 		2B865BC92835044700B57529 /* AdvertiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseView.swift; sourceTree = "<group>"; };
@@ -240,6 +248,7 @@
 				694FB26D2682CF590024011A /* SwiftSocket.xcframework in Frameworks */,
 				693D40402684AB680013832A /* CocoaAsyncSocket.xcframework in Frameworks */,
 				694FB26F2682CF590024011A /* SwiftyJSON.xcframework in Frameworks */,
+				2B07962C284A2AAD0034E09A /* CocoaAsyncSocket.xcframework in Frameworks */,
 				6901E60526858148007223E8 /* NEKit.xcframework in Frameworks */,
 				2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */,
 			);
@@ -361,6 +370,8 @@
 				69980C5C23F7B3CD00829B09 /* Info.plist */,
 				69980C5D23F7B3CD00829B09 /* extension.entitlements */,
 				69A47D69240EB1DD00C86CFF /* ApiService.swift */,
+				2B07962A284A27F40034E09A /* LocalProxyServer.swift */,
+				2B07962F284A3BF90034E09A /* SOCKS5LocalSocket.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -379,6 +390,7 @@
 		69E0BEBE240838CA00E0B982 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				2B0796272849A1F40034E09A /* gfw.js */,
 				696A71EB25146725004EA5DE /* PasswordViewController.swift */,
 				696A71ED251467DA004EA5DE /* QRCodeShowViewController.swift */,
 				6940EC8F240A75460029F526 /* ScannerViewController.swift */,
@@ -480,6 +492,7 @@
 				69980C3723F78D3F00829B09 /* LaunchScreen.storyboard in Resources */,
 				693E92D024A8816200149A75 /* Localizable.strings in Resources */,
 				69980C3423F78D3F00829B09 /* Assets.xcassets in Resources */,
+				2B0796282849A1F40034E09A /* gfw.js in Resources */,
 				2B0016A72835D88B00ED4DAC /* AdvertiseView.xib in Resources */,
 				69980C3223F78D3E00829B09 /* Main.storyboard in Resources */,
 			);
@@ -490,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C1E58AE25417EDD0032F005 /* gfw.plist in Resources */,
+				2B0796292849A1F40034E09A /* gfw.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +569,7 @@
 			files = (
 				69FA41D3240667E1005CF3FA /* SVN.xcdatamodeld in Sources */,
 				696A71F425146CFB004EA5DE /* Utils.swift in Sources */,
+				2B079630284A3BF90034E09A /* SOCKS5LocalSocket.swift in Sources */,
 				69FA419724050059005CF3FA /* HopError.swift in Sources */,
 				69FA41932404DBCD005CF3FA /* HopConstants.swift in Sources */,
 				698A513923FCE64E00836E26 /* HOPAdapter.swift in Sources */,
@@ -563,6 +578,7 @@
 				691566C525356B8D004983F3 /* HOPIPRangeRule.swift in Sources */,
 				69FA418B2404B352005CF3FA /* DataShareManager.swift in Sources */,
 				69A47D6A240EB1DD00C86CFF /* ApiService.swift in Sources */,
+				2B07962B284A27F40034E09A /* LocalProxyServer.swift in Sources */,
 				698A513B23FCE75700836E26 /* HOPAdapterFactory.swift in Sources */,
 				69980C5B23F7B3CD00829B09 /* PacketTunnelProvider.swift in Sources */,
 			);
