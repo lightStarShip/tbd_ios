@@ -10,7 +10,7 @@ import Foundation
 import NEKit
 
 public class HopMessage:NSObject{
-        public static let MAX_BUFFER_SIZE = Opt.MAXNWTCPSocketReadDataSize - 1
+        public static let MAX_BUFFER_SIZE =  (1<<13)
         static let SetupSynFormat = "{\"IV\":%@,\"SubAddr\":\"%@\"}"
         public static func SetupMsg(iv:Data,
                                     subAddr:String)throws -> Data{

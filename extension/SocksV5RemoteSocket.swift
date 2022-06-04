@@ -13,7 +13,6 @@ import SwiftyJSON
 
 
 public class SocksV5RemoteSocket:NSObject{
-        public static var MAXNWTCPScanLength = (1<<13)
         public static let nwqueue = DispatchQueue(label: "remote socket worker queue")
         enum AdapterStatus {
                 case invalid,
@@ -56,33 +55,28 @@ public class SocksV5RemoteSocket:NSObject{
         private var aesKey:AES?
         
         public init(sid :Int, target:String, delegate d: SocksV5ServerDelegate){
-                
-                let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP!,
-                                                port: "\(ApiService.pInst.minerPort!)")
-                
-                var conn =  d.NWScoket(remoteAddr: miner_host)
-                self.connection = conn
+                status = .invalid
+                self.salt = HopMessage.generateRandomBytes(size: HopConstants.SALT_LEN)!
+                let key = ApiService.pInst.P2pKey()
+                self.aesKey = try! AES(key: key,
+                                       blockMode: CFB(iv: self.salt!.bytes),
+                                       padding:.noPadding)
                 self.delegate = d
                 self.sid = sid
+                self.target = target
                 super.init()
-                conn.addObserver(self, forKeyPath: "state", options: .initial, context: &conn)
-                NSLog("--------->[SID=\(self.sid)] adapter step[1] obj created, miner[\(miner_host.description)]")
+                NSLog("--------->[SID=\(self.sid)] adapter step[1] obj created")
         }
         
         func startWork(){
-                do{
-                        status = .connecting
-                        self.salt = HopMessage.generateRandomBytes(size: HopConstants.SALT_LEN)!
-                        let key = ApiService.pInst.P2pKey()
-                        self.aesKey = try AES(key: key,
-                                              blockMode: CFB(iv: self.salt!.bytes),
-                                              padding:.noPadding)
-                }catch let err{
-                        NSLog("--------->[SID=\(self.sid)] adapter remote socket init err:=>\(err.localizedDescription)")
-                        self.stopWork()
-                }
-                
-                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work")
+                status = .connecting
+                let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP!,
+                                                port: "\(ApiService.pInst.minerPort!)")
+                self.connection = self.delegate.NWScoket(remoteAddr: miner_host)
+                self.connection.addObserver(self, forKeyPath: "state",
+                                            options: .initial,
+                                            context: nil)
+                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
         }
         
         
@@ -118,14 +112,15 @@ extension SocksV5RemoteSocket{
         
         /// Handle changes to the tunnel connection state.
         open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-                guard keyPath == "state" && context?.assumingMemoryBound(to: Optional<NWTCPConnection>.self).pointee == connection else {
+                guard keyPath == "state" else {
+                        NSLog("--------->[SID=\(self.sid)] adapter connection unknown keyPath=\(String(describing: keyPath))")
                         super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
                         return
                 }
                 
                 switch connection!.state {
                 case .connected:
-                        
+                        NSLog("--------->[SID=\(self.sid)] adapter step[3] miner conntected")
                         self.setupMsg()
                         break
                         
@@ -137,6 +132,7 @@ extension SocksV5RemoteSocket{
                         self.stopWork(reason:"--------->[SID=\(self.sid)] state disconnected [\(err)]")
                         
                 case .cancelled:
+                        NSLog("--------->[SID=\(self.sid)] adapter miner cancelled")
                         connection!.removeObserver(self, forKeyPath:"state", context:&connection)
                         connection = nil
                         break
@@ -153,15 +149,17 @@ extension SocksV5RemoteSocket{
         func setupMsg(){
                 guard let setup_Data = try? HopMessage.SetupMsg(iv:self.salt!,
                                                                 subAddr: ApiService.pInst.userSubAddress) else{
-                        self.stopWork()
+                        self.stopWork(reason: "--------->SID=\(self.sid)] setup data empty")
                         return
                 }
+                
                 let lv_data = DataWithLen(data: setup_Data)
                 self.connection.write(lv_data) { err in
                         if let e = err{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] step[3] write setup data err[\(e)]")
                                 return
                         }
+                        NSLog("--------->[SID=\(self.sid)] adapter step[4] miner conntected")
                         self.status = .readingSetupACKLen
                         self.readByLV(ready: self.makeProbMsg)
                 }
@@ -173,16 +171,20 @@ extension SocksV5RemoteSocket{
                         self.stopWork(reason: "--------->SID=\(self.sid)]miner setup protocol failed")
                         return
                 }
+                
                 guard let prob_data = try? HopMessage.ProbMsg(target: self.target!) else{
                         self.stopWork(reason: "--------->didRead[\(self.sid)]miner setup protocol failed")
                         return
                 }
-                self.connection.write( prob_data){err in
+                let encode_data = try! self.aesKey!.encrypt(prob_data.bytes)
+                let lv_data = DataWithLen(data: Data(encode_data))
+                self.connection.write(lv_data){err in
                         if let e = err{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] step[4] write prob data err[\(e)]")
                                 return
                         }
                         
+                        NSLog("--------->[SID=\(self.sid)] adapter step[5] setup success and wirte prob msg success")
                         self.status = .readingProbACKLen
                         self.readByLV(ready: self.prepareForwarding)
                 }
@@ -198,6 +200,8 @@ extension SocksV5RemoteSocket{
                         self.stopWork(reason: "--------->SID=\(self.sid)]miner prob protocol failed")
                         return
                 }
+                
+                NSLog("--------->[SID=\(self.sid)] adapter step[6] prob success and prepare to forward packets")
                 self.status = .forwarding
                 SocksV5RemoteSocket.nwqueue.async {
                         self.readByLV(ready: self.forwardToPipe)
@@ -206,11 +210,11 @@ extension SocksV5RemoteSocket{
         
         func forwardToPipe(data:Data){
                 guard let decoded_data = self.readEncoded(data: data) else{
-                        self.stopWork(reason: "--------->SID=\(self.sid)]step[5] forward invalid coded data")
+                        self.stopWork(reason: "--------->SID=\(self.sid)]step[7] forward invalid coded data")
                         return
                 }
                 if let e = self.delegate.loadDataFromServer(data:decoded_data, sid: self.sid){
-                        self.stopWork(reason: "--------->SID=\(self.sid)]step[5] forward data to app err[\(e.localizedDescription)]")
+                        self.stopWork(reason: "--------->SID=\(self.sid)]step[7] forward data to app err[\(e.localizedDescription)]")
                         return
                 }
                 SocksV5RemoteSocket.nwqueue.async {
