@@ -39,6 +39,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 }
                 
                 do {
+                        try ApiService.pInst.setup(param: ops)
                         try Utils.initJavaScript()
                         
                         let settings = try initSetting()

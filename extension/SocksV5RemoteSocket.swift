@@ -57,15 +57,16 @@ public class SocksV5RemoteSocket:NSObject{
         
         public init(sid :Int, target:String, delegate d: SocksV5ServerDelegate){
                 
-                let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP,
+                let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP!,
                                                 port: "\(ApiService.pInst.minerPort!)")
+                
                 var conn =  d.NWScoket(remoteAddr: miner_host)
                 self.connection = conn
                 self.delegate = d
                 self.sid = sid
                 super.init()
                 conn.addObserver(self, forKeyPath: "state", options: .initial, context: &conn)
-                NSLog("--------->[SID=\(self.sid)] step[1] new remote obj created")
+                NSLog("--------->[SID=\(self.sid)] adapter step[1] obj created, miner[\(miner_host.description)]")
         }
         
         func startWork(){
@@ -77,11 +78,11 @@ public class SocksV5RemoteSocket:NSObject{
                                               blockMode: CFB(iv: self.salt!.bytes),
                                               padding:.noPadding)
                 }catch let err{
-                        NSLog("--------->[SID=\(self.sid)] remote socket init err:=>\(err.localizedDescription)")
+                        NSLog("--------->[SID=\(self.sid)] adapter remote socket init err:=>\(err.localizedDescription)")
                         self.stopWork()
                 }
                 
-                NSLog("--------->[SID=\(self.sid)] step[2] new remote obj start to work")
+                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work")
         }
         
         

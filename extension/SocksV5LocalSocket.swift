@@ -148,12 +148,12 @@ public class SocksV5LocalSocket:NSObject{
                 if let r = reason {
                         NSLog(r)
                 }
-                self.delegate?.pipeBreakUp(sid: self.sid)
                 guard let s = self.socket else{
                         return
                 }
                 s.disconnect()
                 self.socket = nil
+                self.delegate?.pipeBreakUp(sid: self.sid)
         }
         public func writeToApp(data:Data){
                 self.write(data: data)
@@ -400,12 +400,12 @@ extension SocksV5LocalSocket{
                         data.withUnsafeBytes {
                                 destinationPort = Int($0.load(as: UInt16.self).bigEndian)
                         }
+                        NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         readStatus = .forwarding
                         if let err = self.delegate?.pipeOpenRemote(tHost:destinationHost, tPort:destinationPort, sid: self.sid){
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[final] failed=\(err)")
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")

@@ -73,10 +73,13 @@ extension SocksV5Server:SocksV5ServerDelegate{
         
         public func pipeOpenRemote(tHost: String, tPort: Int, sid: Int) -> Error?{
                 guard let pipe = proxyCache[sid] else{
+                        NSLog("--------->[SID=\(sid)] not fond such pipe")
                         return SocksErr.socksLost
                 }
                 
                 let target = "\(tHost):\(tPort)"
+                
+                NSLog("--------->[SID=\(sid)] prepare full fill pipe tareget:[\(target)]")
                 let remote = SocksV5RemoteSocket(sid: sid, target: target, delegate:self)
                 
                 proxyQueue.async {
