@@ -10,7 +10,7 @@ import Foundation
 import NEKit
 
 public class HopMessage:NSObject{
-        public static let MAX_BUFFER_SIZE =  (1<<13)
+        public static let MAX_BUFFER_SIZE =  (1<<20)
         static let SetupSynFormat = "{\"IV\":%@,\"SubAddr\":\"%@\"}"
         public static func SetupMsg(iv:Data,
                                     subAddr:String)throws -> Data{

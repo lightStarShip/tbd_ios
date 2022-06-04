@@ -57,6 +57,7 @@ import Foundation
 import CocoaAsyncSocket
 
 public class SocksV5LocalSocket:NSObject{
+        public static let lclQueue = DispatchQueue(label: "local socket worker queue")
         public static let Socks5Ver =  Data([0x05, 0x00])
         public static let SocksVersion = 5
         
@@ -145,11 +146,11 @@ public class SocksV5LocalSocket:NSObject{
         }
         
         public func stopWork(reason:String? =  nil){
-                if let r = reason {
-                        NSLog(r)
-                }
                 guard let s = self.socket else{
                         return
+                }
+                if let r = reason {
+                        NSLog(r)
                 }
                 s.disconnect()
                 self.socket = nil
@@ -163,6 +164,7 @@ public class SocksV5LocalSocket:NSObject{
 // MARK: - Delegate methods for GCDAsyncSocket
 extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
         open func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
+                NSLog("--------->[SID=\(self.sid)] socks5 didWriteDataWithTag[\(tag)]")
         }
         
         open func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -170,21 +172,26 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         self.readTarget(data: data, withTag:tag)
                         return
                 }
+                NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
                 if let e = self.delegate?.receivedAppData(data:data, sid: self.sid){
-                        self.stopWork(reason: "--------->[SID=\(self.sid)] process app data err:[\(e.localizedDescription)]")
+                        self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 process app data err:[\(e.localizedDescription)]")
                         return
+                }
+                SocksV5LocalSocket.lclQueue.async {
+                        self.readTo(len: UInt(HopMessage.MAX_BUFFER_SIZE))
                 }
         }
         
         open func socketDidDisconnect(_ socket: GCDAsyncSocket, withError err: Error?) {
+                NSLog("--------->[SID=\(self.sid)] socks5 socketDidDisconnect [err=\(err?.localizedDescription ?? "<->")]")
         }
         
         open func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
-                
+                NSLog("--------->[SID=\(self.sid)] socks5 didConnectToHost [host=\(host):\(port)]")
         }
         
         open func socketDidSecure(_ sock: GCDAsyncSocket) {
-                
+                NSLog("--------->[SID=\(self.sid)] socks5 socketDidSecure")
         }
 }
 
@@ -261,9 +268,9 @@ extension SocksV5LocalSocket{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[2] data[\(socks_ver), \(socks_len)] param invalid")
                                 return
                         }
-                        self.readTo(len: UInt(socks_len))
                         self.readStatus = .readingMethods
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[2] start to read method")
+                        self.readTo(len: UInt(socks_len))
+                        NSLog("--------->[SID=\(self.sid)] socks5 step[2] start to read method[\(socks_len)]")
                         break
                         
                         /*
@@ -352,13 +359,13 @@ extension SocksV5LocalSocket{
                 case .readingIPv4Address:
                         var address = Data(count: Int(INET_ADDRSTRLEN))
                         _ = data.withUnsafeBytes { data_ptr in
-                            address.withUnsafeMutableBytes { addr_ptr in
-                                inet_ntop(AF_INET, data_ptr.baseAddress!, addr_ptr.bindMemory(to: Int8.self).baseAddress!, socklen_t(INET_ADDRSTRLEN))
-                            }
+                                address.withUnsafeMutableBytes { addr_ptr in
+                                        inet_ntop(AF_INET, data_ptr.baseAddress!, addr_ptr.bindMemory(to: Int8.self).baseAddress!, socklen_t(INET_ADDRSTRLEN))
+                                }
                         }
                         
                         destinationHost = String(data: address, encoding: .utf8)
-
+                        
                         readStatus = .readingPort
                         self.readTo(len: 2)
                         NSLog("--------->[SID=\(self.sid)] socks5 step[5] [host=\(destinationHost!)]")
@@ -381,11 +388,11 @@ extension SocksV5LocalSocket{
                 case .readingIPv6Address:
                         var address = Data(count: Int(INET6_ADDRSTRLEN))
                         _ = data.withUnsafeBytes { data_ptr in
-                            address.withUnsafeMutableBytes { addr_ptr in
-                                inet_ntop(AF_INET6, data_ptr.baseAddress!, addr_ptr.bindMemory(to: Int8.self).baseAddress!, socklen_t(INET6_ADDRSTRLEN))
-                            }
+                                address.withUnsafeMutableBytes { addr_ptr in
+                                        inet_ntop(AF_INET6, data_ptr.baseAddress!, addr_ptr.bindMemory(to: Int8.self).baseAddress!, socklen_t(INET6_ADDRSTRLEN))
+                                }
                         }
-
+                        
                         destinationHost = String(data: address, encoding: .utf8)
                         readStatus = .readingPort
                         self.readTo(len: 2)
@@ -406,10 +413,13 @@ extension SocksV5LocalSocket{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[final] failed=\(err)")
                                 return
                         }
+                        SocksV5LocalSocket.lclQueue.async {
+                                self.readTo(len: UInt(HopMessage.MAX_BUFFER_SIZE))
+                        }
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")
-                    return
+                        return
                 }
         }
 }

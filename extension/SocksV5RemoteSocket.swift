@@ -128,8 +128,7 @@ extension SocksV5RemoteSocket{
                         guard let err = connection!.error as? NSError else{
                                 return
                         }
-                        
-                        self.stopWork(reason:"--------->[SID=\(self.sid)] state disconnected [\(err)]")
+                        NSLog("--------->[SID=\(self.sid)] state disconnected [\(err)]")
                         
                 case .cancelled:
                         NSLog("--------->[SID=\(self.sid)] adapter miner cancelled")
@@ -159,7 +158,6 @@ extension SocksV5RemoteSocket{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] step[3] write setup data err[\(e)]")
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] adapter step[4] miner conntected")
                         self.status = .readingSetupACKLen
                         self.readByLV(ready: self.makeProbMsg)
                 }
@@ -172,6 +170,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
+                NSLog("--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
                 guard let prob_data = try? HopMessage.ProbMsg(target: self.target!) else{
                         self.stopWork(reason: "--------->didRead[\(self.sid)]miner setup protocol failed")
                         return
@@ -184,7 +183,6 @@ extension SocksV5RemoteSocket{
                                 return
                         }
                         
-                        NSLog("--------->[SID=\(self.sid)] adapter step[5] setup success and wirte prob msg success")
                         self.status = .readingProbACKLen
                         self.readByLV(ready: self.prepareForwarding)
                 }
@@ -192,59 +190,62 @@ extension SocksV5RemoteSocket{
         
         func prepareForwarding(data:Data){
                 guard let decoded_data = self.readEncoded(data:data) else{
-                        self.stopWork(reason: "--------->SID=\(self.sid)]miner read encoded msg failed")
+                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter miner read encoded msg failed")
                         return
                 }
                 let obj = JSON(decoded_data)
                 guard obj["Success"].bool == true else{
-                        self.stopWork(reason: "--------->SID=\(self.sid)]miner prob protocol failed")
+                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter miner prob protocol failed")
                         return
                 }
                 
-                NSLog("--------->[SID=\(self.sid)] adapter step[6] prob success and prepare to forward packets")
+                NSLog("--------->[SID=\(self.sid)] adapter step[5] prob success")
                 self.status = .forwarding
                 SocksV5RemoteSocket.nwqueue.async {
-                        self.readByLV(ready: self.forwardToPipe)
+                        NSLog("--------->[SID=\(self.sid)] adapter step[6] prob success and prepare to forward packets")
+                        self.readByLV(ready: self.pullDataFromServer)
                 }
         }
         
-        func forwardToPipe(data:Data){
+        func pullDataFromServer(data:Data){
+                
+                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
-                        self.stopWork(reason: "--------->SID=\(self.sid)]step[7] forward invalid coded data")
+                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
                         return
                 }
-                if let e = self.delegate.loadDataFromServer(data:decoded_data, sid: self.sid){
-                        self.stopWork(reason: "--------->SID=\(self.sid)]step[7] forward data to app err[\(e.localizedDescription)]")
+                if let e = self.delegate.gotServerData(data:decoded_data, sid: self.sid){
+                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward data to app err[\(e.localizedDescription)]")
                         return
                 }
                 SocksV5RemoteSocket.nwqueue.async {
-                        self.readByLV(ready: self.forwardToPipe)
+                        self.readByLV(ready: self.pullDataFromServer)
                 }
         }
         
         func readByLV(ready:@escaping (Data)->Void){
                 self.connection.readLength(HOPAdapter.PACK_HEAD_SIZE, completionHandler: {data, err in
                         if let e = err{
-                                self.stopWork(reason: "--------->[SID=\(self.sid)]read head length err[\(e)]")
+                                self.stopWork(reason: "--------->[SID=\(self.sid)] adapter read head length err[\(e)]")
                                 return
                         }
                         guard let d = data else{
-                                self.stopWork(reason: "--------->[SID=\(self.sid)]read head length data is empty")
+                                self.stopWork(reason: "--------->[SID=\(self.sid)] adapter read head length data is empty")
                                 return
                         }
                         let len = d.ToInt()
                         guard len > 0 else{
-                                self.stopWork(reason: "--------->[SID=\(self.sid)]head length[\(len)] is invalid")
+                                self.stopWork(reason: "--------->[SID=\(self.sid)] adapter head length[\(len)] is invalid")
                                 return
                         }
                         
                         self.connection.readLength(len) { data, err in
                                 if let e = err{
-                                        self.stopWork(reason: "--------->[SID=\(self.sid)]read content err[\(e)]")
+                                        self.stopWork(reason: "--------->[SID=\(self.sid)] adapter read content err[\(e)]")
                                         return
                                 }
                                 guard let d = data else{
-                                        self.stopWork(reason: "--------->[SID=\(self.sid)]content data is empty")
+                                        self.stopWork(reason: "--------->[SID=\(self.sid)] adapter content data is empty")
                                         return
                                 }
                                 ready(d)

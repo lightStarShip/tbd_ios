@@ -12,8 +12,8 @@ import NetworkExtension
 
 
 enum SocksErr: Error {
-    case socksLost
-    case openRemoteErr
+        case socksLost
+        case openRemoteErr
 }
 
 public protocol SocksV5ServerDelegate {
@@ -21,7 +21,7 @@ public protocol SocksV5ServerDelegate {
         func pipeOpenRemote(tHost:String, tPort:Int, sid:Int)->Error?
         func receivedAppData(data:Data, sid:Int) -> Error?
         func NWScoket(remoteAddr:NWEndpoint)->NWTCPConnection
-        func loadDataFromServer(data:Data, sid:Int) -> Error?
+        func gotServerData(data:Data, sid:Int) -> Error?
 }
 open class SocksV5Server: NSObject {
         
@@ -79,7 +79,7 @@ extension SocksV5Server:SocksV5ServerDelegate{
                 
                 let target = "\(tHost):\(tPort)"
                 
-                NSLog("--------->[SID=\(sid)] prepare full fill pipe tareget:[\(target)]")
+                NSLog("--------->[SID=\(sid)] server prepare full fill pipe tareget:[\(target)]")
                 let remote = SocksV5RemoteSocket(sid: sid, target: target, delegate:self)
                 
                 proxyQueue.async {
@@ -110,7 +110,7 @@ extension SocksV5Server:SocksV5ServerDelegate{
                 return self.provider.createTCPConnection(to: remoteAddr, enableTLS: false, tlsParameters:nil, delegate: nil)
         }
         
-        public func loadDataFromServer(data:Data, sid:Int) -> Error?{
+        public func gotServerData(data:Data, sid:Int) -> Error?{
                 guard let pipe = proxyCache[sid] else{
                         return SocksErr.socksLost
                 }
