@@ -18,7 +18,7 @@ extension Data {
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
         let httpQueue = DispatchQueue.global(qos: .userInteractive)
-        var proxyServer: ProxyServer!
+        var proxyServer: SocksV5Proxy!
         let proxyServerPort :UInt16 = 31080
         let proxyServerAddress = "127.0.0.1";
         var enablePacketProcessing = false
@@ -53,15 +53,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         return
                                 }
                                 
-                                self.proxyServer = GCDSOCKS5ProxyServer.init(address: IPAddress(fromString: self.proxyServerAddress), port: Port(port: self.proxyServerPort))
+                                self.proxyServer = SocksV5Proxy(address: self.proxyServerAddress, port: self.proxyServerPort)
                                 
-                                do {try self.proxyServer.start()}catch let err{
+                                do {
+                                        try self.proxyServer.start()
+                                }catch let err{
                                         completionHandler(err)
                                         NSLog("--------->Proxy start err:\(err.localizedDescription)")
                                         return
                                 }
-                                
-                                NSLog("--------->Proxy server started......")
                                 completionHandler(nil)
                         })
                         
@@ -79,7 +79,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 proxySettings.excludeSimpleHostnames = true;
                 proxySettings.autoProxyConfigurationEnabled = true
                 proxySettings.proxyAutoConfigurationJavaScript = Utils.JavaScriptString
-//                proxySettings.matchDomains=[""]
+                proxySettings.matchDomains=[""]
                 networkSettings.proxySettings = proxySettings;
                 
                 let ipv4Settings = NEIPv4Settings(addresses: ["10.0.0.8"], subnetMasks: ["255.255.255.0"])
