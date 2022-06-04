@@ -59,7 +59,9 @@ import CocoaAsyncSocket
 public class SocksV5LocalSocket:NSObject{
         public static let lclQueue = DispatchQueue(label: "local socket worker queue")
         public static let Socks5Ver =  Data([0x05, 0x00])
-        public static let Socks5Reply = Data([0x05, 0x00, 0x00, 0x01])
+        public static let Socks5Reply = Data([0x05, 0x00, 0x00, 0x01,
+                                              0x00, 0x00, 0x00, 0x00,
+                                              0x00, 0x00])
         public static let SocksVersion = 5
         
         enum SOCKS5ProxyReadStatus: CustomStringConvertible {
@@ -159,13 +161,6 @@ public class SocksV5LocalSocket:NSObject{
         public func writeToApp(data:Data){
                 self.write(data: data)
         }
-        public func pullAppDataToProxy(){
-                SocksV5LocalSocket.lclQueue.async {
-                        self.write(data: SocksV5LocalSocket.Socks5Reply)
-                        NSLog("--------->[SID=\(self.sid)] socks5 prepare read data from app")
-                        self.readData()
-                }
-        }
 }
 
 // MARK: - Delegate methods for GCDAsyncSocket
@@ -183,6 +178,10 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                 if let e = self.delegate?.receivedAppData(data:data, sid: self.sid){
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 process app data err:[\(e.localizedDescription)]")
                         return
+                }
+                
+                SocksV5LocalSocket.lclQueue.async {
+                        self.readData()
                 }
         }
         
@@ -412,9 +411,14 @@ extension SocksV5LocalSocket{
                                 destinationPort = Int($0.load(as: UInt16.self).bigEndian)
                         }
                         NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
-                        readStatus = .forwarding
+                        
+                        self.write(data: SocksV5LocalSocket.Socks5Reply)
                         self.delegate?.pipeOpenRemote(tHost:destinationHost, tPort:destinationPort, sid: self.sid)
- 
+                        
+                        readStatus = .forwarding
+                        SocksV5LocalSocket.lclQueue.async {
+                                self.readData()
+                        }
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")
@@ -424,13 +428,13 @@ extension SocksV5LocalSocket{
 }
 
 extension SocksV5LocalSocket{
-        func readTo(len:UInt){
+        private func readTo(len:UInt){
                 self.socket?.readData(toLength:len, withTimeout: -1, tag: self.sid)
         }
-        func readData(){
+        private func readData(){
                 self.socket?.readData(withTimeout: -1, tag: self.sid)
         }
-        func write(data:Data){
+        private func write(data:Data){
                 self.socket?.write(data, withTimeout: -1, tag: self.sid)
         }
 }

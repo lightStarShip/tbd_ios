@@ -202,15 +202,13 @@ extension SocksV5RemoteSocket{
                 
                 NSLog("--------->[SID=\(self.sid)] adapter step[5] prob success")
                 self.status = .forwarding
-                self.delegate.readyForFroxy(sid:self.sid)
-        }
-        
-        public func pullDataFromServer(){
+                
                 SocksV5RemoteSocket.nwqueue.async {
                         NSLog("--------->[SID=\(self.sid)] adapter prepare read data from server")
                         self.readByLV(ready: self.decodeSrvData)
                 }
         }
+        
         public func decodeSrvData(data:Data){
                 NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
@@ -220,6 +218,11 @@ extension SocksV5RemoteSocket{
                 if let e = self.delegate.gotServerData(data:decoded_data, sid: self.sid){
                         self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward data to app err[\(e.localizedDescription)]")
                         return
+                }
+                
+                SocksV5RemoteSocket.nwqueue.async {
+                        NSLog("--------->[SID=\(self.sid)] adapter prepare read data from server")
+                        self.readByLV(ready: self.decodeSrvData)
                 }
         }
         

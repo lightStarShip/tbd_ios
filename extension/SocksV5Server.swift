@@ -22,7 +22,6 @@ public protocol SocksV5ServerDelegate {
         func receivedAppData(data:Data, sid:Int) -> Error?
         func NWScoket(remoteAddr:NWEndpoint)->NWTCPConnection
         func gotServerData(data:Data, sid:Int) -> Error?
-        func readyForFroxy(sid:Int)
 }
 open class SocksV5Server: NSObject {
         
@@ -114,15 +113,6 @@ extension SocksV5Server:SocksV5ServerDelegate{
                 }
                 pipe.local?.writeToApp(data:data)
                 return nil
-        }
-        
-        public func readyForFroxy(sid:Int){
-                guard let pipe = self.proxyCache[sid] else{
-                        NSLog("--------->[SID=\(sid)] not fond such pipe")
-                        return
-                }
-                pipe.local?.pullAppDataToProxy()
-                pipe.remote?.pullDataFromServer()
         }
 }
 
