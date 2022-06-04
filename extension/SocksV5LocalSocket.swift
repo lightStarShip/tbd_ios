@@ -141,7 +141,7 @@ public class SocksV5LocalSocket:NSObject{
         }
         public func startWork(){
                 readStatus = .readingVersionIdentifierAndNumberOfMethods
-                socket?.readData(toLength: 2, withTimeout: -1, tag: self.sid)
+                self.readTo(len: 2)
                 NSLog("--------->[SID=\(self.sid)] socks5 step[1]  read fisrt 2 data")
         }
         
@@ -149,15 +149,20 @@ public class SocksV5LocalSocket:NSObject{
                 guard let s = self.socket else{
                         return
                 }
-                if let r = reason {
-                        NSLog(r)
-                }
+                NSLog(reason ?? "--------->[SID=\(self.sid)] local socket stop work")
                 s.disconnect()
                 self.socket = nil
                 self.delegate?.pipeBreakUp(sid: self.sid)
         }
         public func writeToApp(data:Data){
                 self.write(data: data)
+        }
+        
+        public func pullAppDataToProxy(){
+                SocksV5LocalSocket.lclQueue.async {
+                        NSLog("--------->[SID=\(self.sid)] socks5 prepare read data from app")
+                        self.readData()
+                }
         }
 }
 
@@ -176,9 +181,6 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                 if let e = self.delegate?.receivedAppData(data:data, sid: self.sid){
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 process app data err:[\(e.localizedDescription)]")
                         return
-                }
-                SocksV5LocalSocket.lclQueue.async {
-                        self.readTo(len: UInt(HopMessage.MAX_BUFFER_SIZE))
                 }
         }
         
@@ -409,13 +411,8 @@ extension SocksV5LocalSocket{
                         }
                         NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         readStatus = .forwarding
-                        if let err = self.delegate?.pipeOpenRemote(tHost:destinationHost, tPort:destinationPort, sid: self.sid){
-                                self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[final] failed=\(err)")
-                                return
-                        }
-                        SocksV5LocalSocket.lclQueue.async {
-                                self.readTo(len: UInt(HopMessage.MAX_BUFFER_SIZE))
-                        }
+                        self.delegate?.pipeOpenRemote(tHost:destinationHost, tPort:destinationPort, sid: self.sid)
+ 
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")
@@ -427,6 +424,9 @@ extension SocksV5LocalSocket{
 extension SocksV5LocalSocket{
         func readTo(len:UInt){
                 self.socket?.readData(toLength:len, withTimeout: -1, tag: self.sid)
+        }
+        func readData(){
+                self.socket?.readData(withTimeout: -1, tag: self.sid)
         }
         func write(data:Data){
                 self.socket?.write(data, withTimeout: -1, tag: self.sid)

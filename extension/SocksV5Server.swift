@@ -18,10 +18,11 @@ enum SocksErr: Error {
 
 public protocol SocksV5ServerDelegate {
         func pipeBreakUp(sid:Int)
-        func pipeOpenRemote(tHost:String, tPort:Int, sid:Int)->Error?
+        func pipeOpenRemote(tHost:String, tPort:Int, sid:Int)
         func receivedAppData(data:Data, sid:Int) -> Error?
         func NWScoket(remoteAddr:NWEndpoint)->NWTCPConnection
         func gotServerData(data:Data, sid:Int) -> Error?
+        func readyForFroxy(sid:Int)
 }
 open class SocksV5Server: NSObject {
         
@@ -71,22 +72,19 @@ extension SocksV5Server:GCDAsyncSocketDelegate{
 
 extension SocksV5Server:SocksV5ServerDelegate{
         
-        public func pipeOpenRemote(tHost: String, tPort: Int, sid: Int) -> Error?{
-                guard let pipe = proxyCache[sid] else{
+        public func pipeOpenRemote(tHost: String, tPort: Int, sid: Int){proxyQueue.async {
+                guard let pipe = self.proxyCache[sid] else{
                         NSLog("--------->[SID=\(sid)] not fond such pipe")
-                        return SocksErr.socksLost
+                        return
                 }
                 
                 let target = "\(tHost):\(tPort)"
                 
                 NSLog("--------->[SID=\(sid)] server prepare full fill pipe tareget:[\(target)]")
                 let remote = SocksV5RemoteSocket(sid: sid, target: target, delegate:self)
-                
-                proxyQueue.async {
-                        remote.startWork()
-                }
+                remote.startWork()
                 pipe.remote = remote
-                return nil
+        }
         }
         
         public func receivedAppData(data: Data, sid: Int)  -> Error?{
@@ -116,6 +114,15 @@ extension SocksV5Server:SocksV5ServerDelegate{
                 }
                 pipe.local?.writeToApp(data:data)
                 return nil
+        }
+        
+        public func readyForFroxy(sid:Int){
+                guard let pipe = self.proxyCache[sid] else{
+                        NSLog("--------->[SID=\(sid)] not fond such pipe")
+                        return
+                }
+                pipe.local?.pullAppDataToProxy()
+                pipe.remote?.pullDataFromServer()
         }
 }
 

@@ -103,6 +103,7 @@ public class SocksV5RemoteSocket:NSObject{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] write encode app data failed [\(e)]")
                                 return
                         }
+                        NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
                 }
         }
 }
@@ -201,14 +202,16 @@ extension SocksV5RemoteSocket{
                 
                 NSLog("--------->[SID=\(self.sid)] adapter step[5] prob success")
                 self.status = .forwarding
-                SocksV5RemoteSocket.nwqueue.async {
-                        NSLog("--------->[SID=\(self.sid)] adapter step[6] prob success and prepare to forward packets")
-                        self.readByLV(ready: self.pullDataFromServer)
-                }
+                self.delegate.readyForFroxy(sid:self.sid)
         }
         
-        func pullDataFromServer(data:Data){
-                
+        public func pullDataFromServer(){
+                SocksV5RemoteSocket.nwqueue.async {
+                        NSLog("--------->[SID=\(self.sid)] adapter prepare read data from server")
+                        self.readByLV(ready: self.decodeSrvData)
+                }
+        }
+        public func decodeSrvData(data:Data){
                 NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
                         self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
@@ -217,9 +220,6 @@ extension SocksV5RemoteSocket{
                 if let e = self.delegate.gotServerData(data:decoded_data, sid: self.sid){
                         self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward data to app err[\(e.localizedDescription)]")
                         return
-                }
-                SocksV5RemoteSocket.nwqueue.async {
-                        self.readByLV(ready: self.pullDataFromServer)
                 }
         }
         
