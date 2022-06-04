@@ -10,7 +10,7 @@ import Foundation
 import CocoaAsyncSocket
 
 open class SocksV5Pipe:NSObject{
-        var local:SocksV5LocalSocket!
+        var local:SocksV5LocalSocket?
         var remote:SocksV5RemoteSocket?
         
         public init(local l :SocksV5LocalSocket){
@@ -19,7 +19,9 @@ open class SocksV5Pipe:NSObject{
         }
         
         func stopWork(){
-                self.local.stopWork()
+                self.local?.stopWork()
                 self.remote?.stopWork()
+                self.remote = nil
+                self.local = nil
         }
 }

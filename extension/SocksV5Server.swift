@@ -17,9 +17,11 @@ enum SocksErr: Error {
 }
 
 public protocol SocksV5ServerDelegate {
-        func connectClosed(sid:Int)
+        func pipeBreakUp(sid:Int)
         func pipeOpenRemote(tHost:String, tPort:Int, sid:Int)->Error?
-        func receivedAppData(data:Data, sid:Int)
+        func receivedAppData(data:Data, sid:Int) -> Error?
+        func NWScoket(remoteAddr:NWEndpoint)->NWTCPConnection
+        func loadDataFromServer(data:Data, sid:Int) -> Error?
 }
 open class SocksV5Server: NSObject {
         
@@ -74,15 +76,8 @@ extension SocksV5Server:SocksV5ServerDelegate{
                         return SocksErr.socksLost
                 }
                 
-                //TODO:: refactor ApiService
-                let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP,
-                                                port: "\(ApiService.pInst.minerPort!)")
-                let conn =  self.provider.createTCPConnection(to: miner_host,
-                                                              enableTLS: false,
-                                                              tlsParameters: nil,
-                                                              delegate: nil)
-                
-                let remote = SocksV5RemoteSocket(conn: conn, delegate:self)
+                let target = "\(tHost):\(tPort)"
+                let remote = SocksV5RemoteSocket(sid: sid, target: target, delegate:self)
                 
                 proxyQueue.async {
                         remote.startWork()
@@ -91,16 +86,33 @@ extension SocksV5Server:SocksV5ServerDelegate{
                 return nil
         }
         
-        public func receivedAppData(data: Data, sid: Int) {
-                
+        public func receivedAppData(data: Data, sid: Int)  -> Error?{
+                guard let pipe = proxyCache[sid] else{
+                        return SocksErr.socksLost
+                }
+                pipe.remote?.writeToServer(data: data)
+                return nil
         }
         
-        public func connectClosed(sid: Int) {
+        public func pipeBreakUp(sid: Int) {
                 guard let pipe = proxyCache[sid] else{
                         return
                 }
                 proxyCache.removeValue(forKey: sid)
                 pipe.stopWork()
+        }
+        
+        
+        public func NWScoket(remoteAddr:NWEndpoint)->NWTCPConnection{
+                return self.provider.createTCPConnection(to: remoteAddr, enableTLS: false, tlsParameters:nil, delegate: nil)
+        }
+        
+        public func loadDataFromServer(data:Data, sid:Int) -> Error?{
+                guard let pipe = proxyCache[sid] else{
+                        return SocksErr.socksLost
+                }
+                pipe.local?.writeToApp(data:data)
+                return nil
         }
 }
 

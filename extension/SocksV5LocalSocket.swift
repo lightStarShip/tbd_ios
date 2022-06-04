@@ -148,12 +148,15 @@ public class SocksV5LocalSocket:NSObject{
                 if let r = reason {
                         NSLog(r)
                 }
-                self.delegate?.connectClosed(sid: self.sid)
+                self.delegate?.pipeBreakUp(sid: self.sid)
                 guard let s = self.socket else{
                         return
                 }
                 s.disconnect()
                 self.socket = nil
+        }
+        public func writeToApp(data:Data){
+                self.write(data: data)
         }
 }
 
@@ -167,7 +170,10 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         self.readTarget(data: data, withTag:tag)
                         return
                 }
-                self.delegate?.receivedAppData(data:data, sid: self.sid)
+                if let e = self.delegate?.receivedAppData(data:data, sid: self.sid){
+                        self.stopWork(reason: "--------->[SID=\(self.sid)] process app data err:[\(e.localizedDescription)]")
+                        return
+                }
         }
         
         open func socketDidDisconnect(_ socket: GCDAsyncSocket, withError err: Error?) {
