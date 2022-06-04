@@ -18,7 +18,7 @@ extension Data {
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
         let httpQueue = DispatchQueue.global(qos: .userInteractive)
-        var proxyServer: SocksV5Proxy!
+        var proxyServer: SocksV5Server!
         let proxyServerPort :UInt16 = 31080
         let proxyServerAddress = "127.0.0.1";
         var enablePacketProcessing = false
@@ -53,7 +53,9 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         return
                                 }
                                 
-                                self.proxyServer = SocksV5Proxy(address: self.proxyServerAddress, port: self.proxyServerPort)
+                                self.proxyServer = SocksV5Server(address: self.proxyServerAddress,
+                                                                 port: self.proxyServerPort,
+                                                                 provider: self)
                                 
                                 do {
                                         try self.proxyServer.start()

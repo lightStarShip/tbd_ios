@@ -56,14 +56,7 @@
 import Foundation
 import CocoaAsyncSocket
 
-public protocol SocksV5SocketDelegate {
-        func connectClosed(sid:Int)
-        func createPipe(tHost:String, tPort:Int, sid:Int)->Error?
-        func receivedAppData(data:Data, sid:Int)
-}
-
-public class SocksV5Socket:NSObject{
-        public static var SID = 0
+public class SocksV5LocalSocket:NSObject{
         public static let Socks5Ver =  Data([0x05, 0x00])
         public static let SocksVersion = 5
         
@@ -132,14 +125,13 @@ public class SocksV5Socket:NSObject{
         private var socket: GCDAsyncSocket?
         private var readStatus: SOCKS5ProxyReadStatus = .invalid
         private var writeStatus: SOCKS5ProxyWriteStatus = .invalid
-        private var delegate:SocksV5SocketDelegate?
+        private var delegate:SocksV5ServerDelegate!
         private(set) var sid:Int
         public var destinationHost: String!
         public var destinationPort: Int!
         
-        public init(socket:GCDAsyncSocket, delegate d:SocksV5SocketDelegate){
-                SocksV5Socket.SID += 1
-                self.sid = SocksV5Socket.SID
+        public init(socket:GCDAsyncSocket, delegate d:SocksV5ServerDelegate, sid:Int){
+                self.sid = sid
                 super.init()
                 self.socket = socket
                 socket.delegate = self
@@ -166,7 +158,7 @@ public class SocksV5Socket:NSObject{
 }
 
 // MARK: - Delegate methods for GCDAsyncSocket
-extension SocksV5Socket:GCDAsyncSocketDelegate{
+extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
         open func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
         }
         
@@ -190,7 +182,7 @@ extension SocksV5Socket:GCDAsyncSocketDelegate{
         }
 }
 
-extension SocksV5Socket{
+extension SocksV5LocalSocket{
         
         private func readTarget(data:Data, withTag tag: Int){
                 switch readStatus {
@@ -259,7 +251,7 @@ extension SocksV5Socket{
                         
                         let socks_ver = data[0]
                         let socks_len = data[1]
-                        guard socks_ver == SocksV5Socket.SocksVersion && socks_len > 0 else{
+                        guard socks_ver == SocksV5LocalSocket.SocksVersion && socks_len > 0 else{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[2] data[\(socks_ver), \(socks_len)] param invalid")
                                 return
                         }
@@ -314,7 +306,7 @@ extension SocksV5Socket{
                          */
                 case .readingMethods:
                         // TODO: check for 0x00 in read data
-                        self.write(data: SocksV5Socket.Socks5Ver)
+                        self.write(data: SocksV5LocalSocket.Socks5Ver)
                         readStatus = .readingConnectHeader
                         self.readTo(len: 4)
                         NSLog("--------->[SID=\(self.sid)] socks5 step[3] start to read header ")
@@ -327,7 +319,7 @@ extension SocksV5Socket{
                         }
                         let ver = data[0]
                         let cmd = data[1]
-                        guard ver == SocksV5Socket.SocksVersion && cmd == 1 else{
+                        guard ver == SocksV5LocalSocket.SocksVersion && cmd == 1 else{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[4] [ver=\(ver),cmd=\(cmd)] invalid")
                                 return
                         }
@@ -403,7 +395,7 @@ extension SocksV5Socket{
                                 destinationPort = Int($0.load(as: UInt16.self).bigEndian)
                         }
                         readStatus = .forwarding
-                        if let err = self.delegate?.createPipe(tHost:destinationHost, tPort:destinationPort, sid: self.sid){
+                        if let err = self.delegate?.pipeOpenRemote(tHost:destinationHost, tPort:destinationPort, sid: self.sid){
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[final] failed=\(err)")
                                 return
                         }
@@ -416,7 +408,7 @@ extension SocksV5Socket{
         }
 }
 
-extension SocksV5Socket{
+extension SocksV5LocalSocket{
         func readTo(len:UInt){
                 self.socket?.readData(toLength:len, withTimeout: -1, tag: self.sid)
         }

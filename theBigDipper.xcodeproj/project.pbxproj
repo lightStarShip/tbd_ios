@@ -11,11 +11,12 @@
 		2B0016A92835DA4A00ED4DAC /* AdItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0016A82835DA4A00ED4DAC /* AdItem.swift */; };
 		2B0796282849A1F40034E09A /* gfw.js in Resources */ = {isa = PBXBuildFile; fileRef = 2B0796272849A1F40034E09A /* gfw.js */; };
 		2B0796292849A1F40034E09A /* gfw.js in Resources */ = {isa = PBXBuildFile; fileRef = 2B0796272849A1F40034E09A /* gfw.js */; };
-		2B07962B284A27F40034E09A /* SocksV5Proxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B07962A284A27F40034E09A /* SocksV5Proxy.swift */; };
-		2B079630284A3BF90034E09A /* SocksV5Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B07962F284A3BF90034E09A /* SocksV5Socket.swift */; };
+		2B07962B284A27F40034E09A /* SocksV5Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B07962A284A27F40034E09A /* SocksV5Server.swift */; };
+		2B079630284A3BF90034E09A /* SocksV5LocalSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B07962F284A3BF90034E09A /* SocksV5LocalSocket.swift */; };
 		2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B30BFBC2844544600A74A83 /* starship.xcframework */; };
 		2B865BCA2835044700B57529 /* AdvertiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B865BC92835044700B57529 /* AdvertiseView.swift */; };
-		2BE4A671284AE6C100966578 /* Socks5Pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE4A670284AE6C100966578 /* Socks5Pipe.swift */; };
+		2BE4A671284AE6C100966578 /* SocksV5Pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE4A670284AE6C100966578 /* SocksV5Pipe.swift */; };
+		2BE4A673284B02E000966578 /* SocksV5RemoteSocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE4A672284B02E000966578 /* SocksV5RemoteSocket.swift */; };
 		2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
 		2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
@@ -146,12 +147,13 @@
 		2B0016A62835D88B00ED4DAC /* AdvertiseView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AdvertiseView.xib; sourceTree = "<group>"; };
 		2B0016A82835DA4A00ED4DAC /* AdItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdItem.swift; sourceTree = "<group>"; };
 		2B0796272849A1F40034E09A /* gfw.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = gfw.js; sourceTree = "<group>"; };
-		2B07962A284A27F40034E09A /* SocksV5Proxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5Proxy.swift; sourceTree = "<group>"; };
-		2B07962F284A3BF90034E09A /* SocksV5Socket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5Socket.swift; sourceTree = "<group>"; };
+		2B07962A284A27F40034E09A /* SocksV5Server.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5Server.swift; sourceTree = "<group>"; };
+		2B07962F284A3BF90034E09A /* SocksV5LocalSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5LocalSocket.swift; sourceTree = "<group>"; };
 		2B30BFBB284441AE00A74A83 /* vpnRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = vpnRelease.entitlements; path = vpn/vpnRelease.entitlements; sourceTree = "<group>"; };
 		2B30BFBC2844544600A74A83 /* starship.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = starship.xcframework; path = bin/starship.xcframework; sourceTree = "<group>"; };
 		2B865BC92835044700B57529 /* AdvertiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseView.swift; sourceTree = "<group>"; };
-		2BE4A670284AE6C100966578 /* Socks5Pipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socks5Pipe.swift; sourceTree = "<group>"; };
+		2BE4A670284AE6C100966578 /* SocksV5Pipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5Pipe.swift; sourceTree = "<group>"; };
+		2BE4A672284B02E000966578 /* SocksV5RemoteSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5RemoteSocket.swift; sourceTree = "<group>"; };
 		691566C425356B8D004983F3 /* HOPIPRangeRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HOPIPRangeRule.swift; sourceTree = "<group>"; };
 		691CCF9F23F8240D007768DF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		6924223F240D368F00590536 /* MinerChooseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerChooseTableViewController.swift; sourceTree = "<group>"; };
@@ -370,9 +372,10 @@
 				69980C5C23F7B3CD00829B09 /* Info.plist */,
 				69980C5D23F7B3CD00829B09 /* extension.entitlements */,
 				69A47D69240EB1DD00C86CFF /* ApiService.swift */,
-				2B07962A284A27F40034E09A /* SocksV5Proxy.swift */,
-				2BE4A670284AE6C100966578 /* Socks5Pipe.swift */,
-				2B07962F284A3BF90034E09A /* SocksV5Socket.swift */,
+				2B07962A284A27F40034E09A /* SocksV5Server.swift */,
+				2BE4A670284AE6C100966578 /* SocksV5Pipe.swift */,
+				2B07962F284A3BF90034E09A /* SocksV5LocalSocket.swift */,
+				2BE4A672284B02E000966578 /* SocksV5RemoteSocket.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -570,17 +573,18 @@
 			files = (
 				69FA41D3240667E1005CF3FA /* SVN.xcdatamodeld in Sources */,
 				696A71F425146CFB004EA5DE /* Utils.swift in Sources */,
-				2B079630284A3BF90034E09A /* SocksV5Socket.swift in Sources */,
+				2B079630284A3BF90034E09A /* SocksV5LocalSocket.swift in Sources */,
 				69FA419724050059005CF3FA /* HopError.swift in Sources */,
 				69FA41932404DBCD005CF3FA /* HopConstants.swift in Sources */,
-				2BE4A671284AE6C100966578 /* Socks5Pipe.swift in Sources */,
+				2BE4A671284AE6C100966578 /* SocksV5Pipe.swift in Sources */,
 				698A513923FCE64E00836E26 /* HOPAdapter.swift in Sources */,
+				2BE4A673284B02E000966578 /* SocksV5RemoteSocket.swift in Sources */,
 				698A513D23FCF90700836E26 /* HOPDomainsRule.swift in Sources */,
 				69A47D70240EB8C100C86CFF /* HopMessage.swift in Sources */,
 				691566C525356B8D004983F3 /* HOPIPRangeRule.swift in Sources */,
 				69FA418B2404B352005CF3FA /* DataShareManager.swift in Sources */,
 				69A47D6A240EB1DD00C86CFF /* ApiService.swift in Sources */,
-				2B07962B284A27F40034E09A /* SocksV5Proxy.swift in Sources */,
+				2B07962B284A27F40034E09A /* SocksV5Server.swift in Sources */,
 				698A513B23FCE75700836E26 /* HOPAdapterFactory.swift in Sources */,
 				69980C5B23F7B3CD00829B09 /* PacketTunnelProvider.swift in Sources */,
 			);
