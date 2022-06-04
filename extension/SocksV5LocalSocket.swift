@@ -59,6 +59,7 @@ import CocoaAsyncSocket
 public class SocksV5LocalSocket:NSObject{
         public static let lclQueue = DispatchQueue(label: "local socket worker queue")
         public static let Socks5Ver =  Data([0x05, 0x00])
+        public static let Socks5Reply = Data([0x05, 0x00, 0x00, 0x01])
         public static let SocksVersion = 5
         
         enum SOCKS5ProxyReadStatus: CustomStringConvertible {
@@ -128,6 +129,7 @@ public class SocksV5LocalSocket:NSObject{
         private var writeStatus: SOCKS5ProxyWriteStatus = .invalid
         private var delegate:SocksV5ServerDelegate!
         private(set) var sid:Int
+        private var cmd:UInt8 = 0
         public var destinationHost: String!
         public var destinationPort: Int!
         
@@ -157,9 +159,9 @@ public class SocksV5LocalSocket:NSObject{
         public func writeToApp(data:Data){
                 self.write(data: data)
         }
-        
         public func pullAppDataToProxy(){
                 SocksV5LocalSocket.lclQueue.async {
+                        self.write(data: SocksV5LocalSocket.Socks5Reply)
                         NSLog("--------->[SID=\(self.sid)] socks5 prepare read data from app")
                         self.readData()
                 }
@@ -333,7 +335,7 @@ extension SocksV5LocalSocket{
                                 return
                         }
                         let ver = data[0]
-                        let cmd = data[1]
+                        self.cmd = data[1]
                         guard ver == SocksV5LocalSocket.SocksVersion && cmd == 1 else{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[4] [ver=\(ver),cmd=\(cmd)] invalid")
                                 return
