@@ -111,15 +111,17 @@ public class SocksV5RemoteSocket:NSObject{
                 let lv_data = DataWithLen(data: Data(encode_data))
                 self.connection.write(lv_data) { err in
                         if let e = err{
-                                self.stopWork(reason:"--------->[SID=\(self.sid)] write encode app data failed [\(e)]")
+                                self.stopWork(reason:"--------->[SID=\(self.sid)] write encoded  data to server err:[\(e)]")
                                 return
                         }
                         NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
                 }
         }
+        
         func readSrvData(){
                 readByLV(ready: self.decodeSrvData)
         }
+        
         private func decodeSrvData(data:Data){
                 NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
@@ -151,7 +153,7 @@ extension SocksV5RemoteSocket{
                         guard let err = connection!.error as? NSError else{
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] state disconnected [\(err)]")
+                        NSLog("--------->[SID=\(self.sid)] adapter state disconnected [\(err)]")
                         
                 case .cancelled:
                         NSLog("--------->[SID=\(self.sid)] adapter miner cancelled")
@@ -160,6 +162,7 @@ extension SocksV5RemoteSocket{
                         break
                         
                 default:
+                        NSLog("--------->[SID=\(self.sid)] adapter state[\(connection!.state)] changed")
                         break
                 }
         }

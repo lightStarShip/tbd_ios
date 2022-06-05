@@ -53,25 +53,6 @@ open class SocksV5Pipe:NSObject{
 }
 
 extension SocksV5Pipe:SocksV5PipeDelegate{
-        public func remoteSockeyReady() {
-                self.status = self.status | SocksV5Pipe.remoteReady
-                guard self.status == SocksV5Pipe.ready else{
-                        self.stopWork(reason: "--------->[SID=\(self.pid)] pipe status[\(self.status)] invalid")
-                        return
-                }
-                
-                NSLog("--------->[SID=\(self.pid)] pipe is ready!")
-                pipeQueue.async {
-                        self.localSock?.readAppData()
-                }
-                pipeQueue.async {
-                        self.remoteSock?.readSrvData()
-                }
-        }
-        
-        public func pipeBreakUp() {
-                self.stopWork(reason: "--------->[SID=\(self.pid)] pipe  break up for delegate")
-        }
         
         public func localSocketReady(target: String) {
                 pipeQueue.async {
@@ -87,19 +68,33 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
                 }
         }
         
-        public func gotAppData(data: Data) {
-                self.remoteSock?.writeToServer(data: data)
-                pipeQueue.async {
-                        self.localSock?.readAppData()
+        public func remoteSockeyReady() {
+                self.status = self.status | SocksV5Pipe.remoteReady
+                guard self.status == SocksV5Pipe.ready else{
+                        self.stopWork(reason: "--------->[SID=\(self.pid)] pipe status[\(self.status)] invalid")
+                        return
                 }
-                NSLog("--------->[SID=\(self.pid)] pipe got app data[\(data.count)]")
+                
+                NSLog("--------->[SID=\(self.pid)] pipe is ready!")
+                
+                pipeQueue.async {self.localSock?.readAppData()}
+                pipeQueue.async {self.remoteSock?.readSrvData()}
+        }
+        
+        public func gotAppData(data: Data) {
+                NSLog("--------->[SID=\(self.pid)] pipe app--->server data[\(data.count)]")
+                pipeQueue.async { self.remoteSock?.writeToServer(data: data)}
+                pipeQueue.async { self.localSock?.readAppData()}
         }
         
         public func gotServerData(data: Data){
-                self.localSock?.writeToApp(data: data)
-                pipeQueue.async {
-                        self.remoteSock?.readSrvData()
-                }
-                NSLog("--------->[SID=\(self.pid)] pipe got server data[\(data.count)]")
+                NSLog("--------->[SID=\(self.pid)] pipe server--->app data[\(data.count)]")
+                pipeQueue.async {self.localSock?.writeToApp(data: data)}
+                pipeQueue.async { self.remoteSock?.readSrvData() }
+        }
+        
+        
+        public func pipeBreakUp() {
+                self.stopWork(reason: "--------->[SID=\(self.pid)] pipe  break up for delegate")
         }
 }
