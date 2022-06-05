@@ -162,7 +162,6 @@ extension SocksV5RemoteSocket{
                         break
                         
                 default:
-                        NSLog("--------->[SID=\(self.sid)] adapter state[\(connection!.state)] changed")
                         break
                 }
         }

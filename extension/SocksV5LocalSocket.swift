@@ -158,7 +158,7 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         readStatus = .forwarding
                         let target = "\(destinationHost!):\(destinationPort!)"
                         self.delegate.localSocketReady(target:target)
-                        NSLog("--------->[SID=\(self.sid)] socks5 local socket ready[\(target)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 local socket ready[\(target)]")
                 }
         }
         
