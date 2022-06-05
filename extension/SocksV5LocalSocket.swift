@@ -128,7 +128,7 @@ public class SocksV5LocalSocket:NSObject{
         public func startWork(){
                 readStatus = .readingVersionIdentifierAndNumberOfMethods
                 self.readTo(len: 2)
-                NSLog("--------->[SID=\(self.sid)] socks5 step[1]  read fisrt 2 data")
+//                NSLog("--------->[SID=\(self.sid)] socks5 step[1]  read fisrt 2 data")
         }
         
         public func stopWork(reason:String? =  nil){
@@ -156,9 +156,9 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                 
                 if readStatus == .writeReply{
                         readStatus = .forwarding
-                        NSLog("--------->[SID=\(self.sid)] socks5 local socket write v5 reply success")
                         let target = "\(destinationHost!):\(destinationPort!)"
                         self.delegate.localSocketReady(target:target)
+                        NSLog("--------->[SID=\(self.sid)] socks5 local socket ready[\(target)]")
                 }
         }
         
@@ -167,7 +167,7 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         self.readTarget(data: data, withTag:tag)
                         return
                 }
-                NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
+//                NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
                 self.delegate.gotAppData(data:data)
         }
         
@@ -259,7 +259,7 @@ extension SocksV5LocalSocket{
                         }
                         self.readStatus = .readingMethods
                         self.readTo(len: UInt(socks_len))
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[2] start to read method[\(socks_len)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[2] start to read method[\(socks_len)]")
                         break
                         
                         /*
@@ -311,7 +311,7 @@ extension SocksV5LocalSocket{
                         self.write(data: SocksV5LocalSocket.Socks5Ver)
                         readStatus = .readingConnectHeader
                         self.readTo(len: 4)
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[3] start to read header ")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[3] start to read header ")
                         break
                         
                 case .readingConnectHeader:
@@ -343,7 +343,7 @@ extension SocksV5LocalSocket{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[4] [typ=\(typ)] invalid")
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[4] start to read host [typ=\(typ)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[4] start to read host [typ=\(typ)]")
                         break
                 case .readingIPv4Address:
                         var address = Data(count: Int(INET_ADDRSTRLEN))
@@ -357,7 +357,7 @@ extension SocksV5LocalSocket{
                         
                         readStatus = .readingPort
                         self.readTo(len: 2)
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] [host=\(destinationHost!)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] [host=\(destinationHost!)]")
                         break
                 case .readingDomainLength:
                         guard data.count == 1 else{
@@ -366,13 +366,13 @@ extension SocksV5LocalSocket{
                         }
                         readStatus = .readingDomain
                         self.readTo(len:UInt(data[0]))
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] host [len=\(data[0])]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] host [len=\(data[0])]")
                         break
                 case .readingDomain:
                         destinationHost = String(data: data, encoding: .utf8)
                         readStatus = .readingPort
                         self.readTo(len: 2)
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[6] [host=\(destinationHost!)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[6] [host=\(destinationHost!)]")
                         break
                 case .readingIPv6Address:
                         var address = Data(count: Int(INET6_ADDRSTRLEN))
@@ -385,7 +385,7 @@ extension SocksV5LocalSocket{
                         destinationHost = String(data: address, encoding: .utf8)
                         readStatus = .readingPort
                         self.readTo(len: 2)
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] [host=\(destinationHost!)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] [host=\(destinationHost!)]")
                         break
                         
                 case .readingPort:
@@ -396,7 +396,7 @@ extension SocksV5LocalSocket{
                         data.withUnsafeBytes {
                                 destinationPort = Int($0.load(as: UInt16.self).bigEndian)
                         }
-                        NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
+//                        NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         
                         readStatus = .writeReply
                         self.write(data: SocksV5LocalSocket.Socks5Reply)

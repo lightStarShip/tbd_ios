@@ -82,13 +82,13 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
         }
         
         public func gotAppData(data: Data) {
-                NSLog("--------->[SID=\(self.pid)] pipe app--->server data[\(data.count)]")
+                NSLog("--------->[SID=\(self.pid)] app-----[\(data.count)]----->server")
                 pipeQueue.async { self.remoteSock?.writeToServer(data: data)}
                 pipeQueue.async { self.localSock?.readAppData()}
         }
         
         public func gotServerData(data: Data){
-                NSLog("--------->[SID=\(self.pid)] pipe server--->app data[\(data.count)]")
+                NSLog("--------->[SID=\(self.pid)] app<++++[\(data.count)]+++++server")
                 pipeQueue.async {self.localSock?.writeToApp(data: data)}
                 pipeQueue.async { self.remoteSock?.readSrvData() }
         }

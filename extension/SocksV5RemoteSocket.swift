@@ -65,7 +65,7 @@ public class SocksV5RemoteSocket:NSObject{
                 self.sid = sid
                 self.target = target
                 super.init()
-                NSLog("--------->[SID=\(self.sid)] adapter step[1] obj created")
+                NSLog("--------->[SID=\(self.sid)] adapter  obj created")
         }
         
         func startWork(){
@@ -87,7 +87,7 @@ public class SocksV5RemoteSocket:NSObject{
                                  context: nil)
                 status = .connecting
                 
-                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
+//                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
         }
         
         
@@ -114,7 +114,7 @@ public class SocksV5RemoteSocket:NSObject{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] write encoded  data to server err:[\(e)]")
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
+//                        NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
                 }
         }
         
@@ -123,7 +123,7 @@ public class SocksV5RemoteSocket:NSObject{
         }
         
         private func decodeSrvData(data:Data){
-                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
+//                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
                         self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
                         return
@@ -138,14 +138,14 @@ extension SocksV5RemoteSocket{
         /// Handle changes to the tunnel connection state.
         open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
                 guard keyPath == "state" else {
-                        NSLog("--------->[SID=\(self.sid)] adapter connection unknown keyPath=\(String(describing: keyPath))")
                         super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+                        self.stopWork(reason: "--------->[SID=\(self.sid)] adapter connection unknown keyPath=\(String(describing: keyPath))")
                         return
                 }
                 
                 switch connection!.state {
                 case .connected:
-                        NSLog("--------->[SID=\(self.sid)] adapter step[3] miner conntected")
+//                        NSLog("--------->[SID=\(self.sid)] adapter step[3] miner conntected")
                         self.setupMsg()
                         break
                         
@@ -153,10 +153,10 @@ extension SocksV5RemoteSocket{
                         guard let err = connection!.error as? NSError else{
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] adapter state disconnected [\(err)]")
+                        self.stopWork(reason:"--------->[SID=\(self.sid)] adapter state disconnected [\(err)]")
                         
                 case .cancelled:
-                        NSLog("--------->[SID=\(self.sid)] adapter miner cancelled")
+                        self.stopWork(reason:"--------->[SID=\(self.sid)] adapter miner cancelled")
                         connection!.removeObserver(self, forKeyPath:"state", context:&connection)
                         connection = nil
                         break
@@ -196,7 +196,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-                NSLog("--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
+//                NSLog("--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
                 guard let prob_data = try? HopMessage.ProbMsg(target: self.target!) else{
                         self.stopWork(reason: "--------->didRead[\(self.sid)]miner setup protocol failed")
                         return
@@ -225,7 +225,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-                NSLog("--------->[SID=\(self.sid)] adapter step[final] prob success")
+//                NSLog("--------->[SID=\(self.sid)] adapter step[final] prob success")
                 self.status = .forwarding
                 self.delegate.remoteSockeyReady()
         }
@@ -262,7 +262,6 @@ extension SocksV5RemoteSocket{
         
         func readEncoded(data:Data)-> Data? {
                 guard let decode_data = try? self.aesKey?.decrypt(data.bytes) else{
-                        NSLog("--------->[SID=\(self.sid)]decrypt data is failed")
                         return nil
                 }
                 return Data(decode_data)
