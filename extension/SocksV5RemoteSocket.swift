@@ -13,7 +13,7 @@ import SwiftyJSON
 
 
 public class SocksV5RemoteSocket:NSObject{
-        public static let nwqueue = DispatchQueue(label: "remote socket worker queue")
+        
         enum AdapterStatus {
                 case invalid,
                      connecting,
@@ -48,13 +48,13 @@ public class SocksV5RemoteSocket:NSObject{
         
         private var connection: NWTCPConnection!
         private var status:AdapterStatus = .invalid
-        private var delegate:SocksV5ServerDelegate!
+        private var delegate:SocksV5PipeDelegate
         private var sid:Int
         private var target:String?
         private var salt:Data?
         private var aesKey:AES?
         
-        public init(sid :Int, target:String, delegate d: SocksV5ServerDelegate){
+        public init(sid :Int, target:String, delegate d: SocksV5PipeDelegate){
                 status = .invalid
                 self.salt = HopMessage.generateRandomBytes(size: HopConstants.SALT_LEN)!
                 let key = ApiService.pInst.P2pKey()
@@ -69,13 +69,26 @@ public class SocksV5RemoteSocket:NSObject{
         }
         
         func startWork(){
-                status = .connecting
+                guard let provider = SocksV5Server.provider else{
+                        NSLog("--------->[SID=\(self.sid)] failed start, provider is nil")
+                        return
+                }
+                
                 let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP!,
                                                 port: "\(ApiService.pInst.minerPort!)")
-                self.connection = self.delegate.NWScoket(remoteAddr: miner_host)
-                self.connection.addObserver(self, forKeyPath: "state",
-                                            options: .initial,
-                                            context: nil)
+                
+                let conn = provider.createTCPConnection(to: miner_host,
+                                                        enableTLS: false,
+                                                        tlsParameters:nil,
+                                                        delegate: nil)
+                
+                conn.addObserver(self, forKeyPath: "state",
+                                 options: .initial,
+                                 context: nil)
+                
+                self.connection = conn
+                status = .connecting
+                
                 NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
         }
         
@@ -88,7 +101,7 @@ public class SocksV5RemoteSocket:NSObject{
                         return
                 }
                 self.status = .stopped
-                self.delegate.pipeBreakUp(sid: self.sid)
+                self.delegate.pipeBreakUp()
                 self.connection.cancel()
         }
         
@@ -105,6 +118,17 @@ public class SocksV5RemoteSocket:NSObject{
                         }
                         NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
                 }
+        }
+        func readSrvData(){
+                readByLV(ready: self.decodeSrvData)
+        }
+        private func decodeSrvData(data:Data){
+                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
+                guard let decoded_data = self.readEncoded(data: data) else{
+                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
+                        return
+                }
+                self.delegate.gotServerData(data:decoded_data)
         }
 }
 
@@ -200,30 +224,9 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-                NSLog("--------->[SID=\(self.sid)] adapter step[5] prob success")
+                NSLog("--------->[SID=\(self.sid)] adapter step[final] prob success")
                 self.status = .forwarding
-                
-                SocksV5RemoteSocket.nwqueue.async {
-                        NSLog("--------->[SID=\(self.sid)] adapter prepare read data from server")
-                        self.readByLV(ready: self.decodeSrvData)
-                }
-        }
-        
-        public func decodeSrvData(data:Data){
-                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
-                guard let decoded_data = self.readEncoded(data: data) else{
-                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
-                        return
-                }
-                if let e = self.delegate.gotServerData(data:decoded_data, sid: self.sid){
-                        self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward data to app err[\(e.localizedDescription)]")
-                        return
-                }
-                
-                SocksV5RemoteSocket.nwqueue.async {
-                        NSLog("--------->[SID=\(self.sid)] adapter prepare read data from server")
-                        self.readByLV(ready: self.decodeSrvData)
-                }
+                self.delegate.remoteSockeyReady()
         }
         
         func readByLV(ready:@escaping (Data)->Void){

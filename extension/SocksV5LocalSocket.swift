@@ -57,7 +57,7 @@ import Foundation
 import CocoaAsyncSocket
 
 public class SocksV5LocalSocket:NSObject{
-        public static let lclQueue = DispatchQueue(label: "local socket worker queue")
+        
         public static let Socks5Ver =  Data([0x05, 0x00])
         public static let Socks5Reply = Data([0x05, 0x00, 0x00, 0x01,
                                               0x00, 0x00, 0x00, 0x00,
@@ -129,18 +129,18 @@ public class SocksV5LocalSocket:NSObject{
         private var socket: GCDAsyncSocket?
         private var readStatus: SOCKS5ProxyReadStatus = .invalid
         private var writeStatus: SOCKS5ProxyWriteStatus = .invalid
-        private var delegate:SocksV5ServerDelegate!
+        private var delegate:SocksV5PipeDelegate
         private(set) var sid:Int
         private var cmd:UInt8 = 0
         public var destinationHost: String!
         public var destinationPort: Int!
         
-        public init(socket:GCDAsyncSocket, delegate d:SocksV5ServerDelegate, sid:Int){
+        public init(socket:GCDAsyncSocket, delegate d:SocksV5PipeDelegate, sid:Int){
                 self.sid = sid
-                super.init()
-                self.socket = socket
-                socket.delegate = self
                 self.delegate = d
+                super.init()
+                socket.delegate = self
+                self.socket = socket
                 NSLog("--------->[SID=\(self.sid)] new socks5 obj created")
         }
         public func startWork(){
@@ -156,17 +156,26 @@ public class SocksV5LocalSocket:NSObject{
                 NSLog(reason ?? "--------->[SID=\(self.sid)] local socket stop work")
                 s.disconnect()
                 self.socket = nil
-                self.delegate?.pipeBreakUp(sid: self.sid)
+                self.delegate.pipeBreakUp()
         }
+        
         public func writeToApp(data:Data){
                 self.write(data: data)
+        }
+        
+        public func readAppData(){
+                self.readData()
         }
 }
 
 // MARK: - Delegate methods for GCDAsyncSocket
 extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
         open func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-                NSLog("--------->[SID=\(self.sid)] socks5 didWriteDataWithTag[\(tag)]")
+                if readStatus == .forwarding{
+                        NSLog("--------->[SID=\(self.sid)] socks5 didWriteDataWithTag[\(tag)]")
+                        let target = "\(destinationHost!):\(destinationPort!)"
+                        self.delegate.localSocketReady(target:target)
+                }
         }
         
         open func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -175,14 +184,7 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         return
                 }
                 NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
-                if let e = self.delegate?.receivedAppData(data:data, sid: self.sid){
-                        self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 process app data err:[\(e.localizedDescription)]")
-                        return
-                }
-                
-                SocksV5LocalSocket.lclQueue.async {
-                        self.readData()
-                }
+                self.delegate.gotAppData(data:data)
         }
         
         open func socketDidDisconnect(_ socket: GCDAsyncSocket, withError err: Error?) {
@@ -413,12 +415,7 @@ extension SocksV5LocalSocket{
                         NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         
                         self.write(data: SocksV5LocalSocket.Socks5Reply)
-                        self.delegate?.pipeOpenRemote(tHost:destinationHost, tPort:destinationPort, sid: self.sid)
-                        
                         readStatus = .forwarding
-                        SocksV5LocalSocket.lclQueue.async {
-                                self.readData()
-                        }
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")
