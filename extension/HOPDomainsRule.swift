@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import NEKit
 
 class HOPDomainsRule: AllRule {
         

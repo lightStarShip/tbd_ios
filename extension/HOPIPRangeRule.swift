@@ -1,5 +1,4 @@
 import Foundation
-import NEKit
 
 /// The rule matches the ip of the target hsot to a list of IP ranges.
 open class HOPIPRangeRule: Rule {

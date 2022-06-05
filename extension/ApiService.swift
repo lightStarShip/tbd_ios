@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import SwiftSocket
 import SwiftyJSON
 
 @objc public protocol ProtocolDelegate: NSObjectProtocol{

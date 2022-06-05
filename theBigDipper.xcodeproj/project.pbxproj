@@ -20,30 +20,11 @@
 		2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
 		2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
-		6901E5FB26858074007223E8 /* CocoaLumberjack.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8B72681CE1D00524FC6 /* CocoaLumberjack.xcframework */; };
-		6901E5FC26858074007223E8 /* CocoaLumberjack.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8B72681CE1D00524FC6 /* CocoaLumberjack.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E5FD26858074007223E8 /* CocoaLumberjackSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 694FB2732682CF5A0024011A /* CocoaLumberjackSwift.xcframework */; };
-		6901E5FE26858074007223E8 /* CocoaLumberjackSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 694FB2732682CF5A0024011A /* CocoaLumberjackSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E5FF268580F9007223E8 /* lwip.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8B82681CE1D00524FC6 /* lwip.xcframework */; };
-		6901E600268580FA007223E8 /* lwip.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8B82681CE1D00524FC6 /* lwip.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E601268580FA007223E8 /* MMDB.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8B92681CE1D00524FC6 /* MMDB.xcframework */; };
-		6901E602268580FA007223E8 /* MMDB.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8B92681CE1D00524FC6 /* MMDB.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E60526858148007223E8 /* NEKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8952681CDB000524FC6 /* NEKit.xcframework */; };
-		6901E607268581B1007223E8 /* Resolver.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 694FB2742682CF5A0024011A /* Resolver.xcframework */; };
-		6901E608268581B1007223E8 /* Resolver.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 694FB2742682CF5A0024011A /* Resolver.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E609268581B1007223E8 /* tun2socks.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB89F2681CDEB00524FC6 /* tun2socks.xcframework */; };
-		6901E60A268581B1007223E8 /* tun2socks.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB89F2681CDEB00524FC6 /* tun2socks.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E60B268581B1007223E8 /* Yaml.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB89E2681CDEB00524FC6 /* Yaml.xcframework */; };
-		6901E60C268581B1007223E8 /* Yaml.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB89E2681CDEB00524FC6 /* Yaml.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		6901E60D26858300007223E8 /* NEKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8952681CDB000524FC6 /* NEKit.xcframework */; };
-		6901E60E26858300007223E8 /* NEKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8952681CDB000524FC6 /* NEKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		691566C525356B8D004983F3 /* HOPIPRangeRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 691566C425356B8D004983F3 /* HOPIPRangeRule.swift */; };
 		69242240240D368F00590536 /* MinerChooseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6924223F240D368F00590536 /* MinerChooseTableViewController.swift */; };
 		693D40402684AB680013832A /* CocoaAsyncSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8752681CA6000524FC6 /* CocoaAsyncSocket.xcframework */; };
 		693E92D024A8816200149A75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D224A8816200149A75 /* Localizable.strings */; };
 		693E92D624A89A9D00149A75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D824A89A9D00149A75 /* InfoPlist.strings */; };
 		6940EC90240A75460029F526 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940EC8F240A75460029F526 /* ScannerViewController.swift */; };
-		694FB26D2682CF590024011A /* SwiftSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88C2681CA9E00524FC6 /* SwiftSocket.xcframework */; };
 		694FB26F2682CF590024011A /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88F2681CAA100524FC6 /* SwiftyJSON.xcframework */; };
 		695E4C392401778600A13631 /* SVN.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 695E4C372401778600A13631 /* SVN.xcdatamodeld */; };
 		696A71EC25146725004EA5DE /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A71EB25146725004EA5DE /* PasswordViewController.swift */; };
@@ -55,11 +36,7 @@
 		696A71FA25149F2E004EA5DE /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A71F925149F2E004EA5DE /* NewAccountViewController.swift */; };
 		696B02D425187B8E00F76A51 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B02D325187B8E00F76A51 /* AppSetting.swift */; };
 		696B02E9251A079500F76A51 /* RoundedCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B02E8251A079500F76A51 /* RoundedCornerView.swift */; };
-		698A513923FCE64E00836E26 /* HOPAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A513823FCE64E00836E26 /* HOPAdapter.swift */; };
-		698A513B23FCE75700836E26 /* HOPAdapterFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A513A23FCE75700836E26 /* HOPAdapterFactory.swift */; };
-		698A513D23FCF90700836E26 /* HOPDomainsRule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A513C23FCF90700836E26 /* HOPDomainsRule.swift */; };
 		698A514323FD58DC00836E26 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A514223FD58DC00836E26 /* Utils.swift */; };
-		698A514423FD5BC900836E26 /* gfw.plist in Resources */ = {isa = PBXBuildFile; fileRef = 698A513E23FD08B900836E26 /* gfw.plist */; };
 		698D07622567700200A55656 /* UserManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D07612567700200A55656 /* UserManualViewController.swift */; };
 		69980C2923F78D3E00829B09 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69980C2823F78D3E00829B09 /* AppDelegate.swift */; };
 		69980C2B23F78D3E00829B09 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69980C2A23F78D3E00829B09 /* SceneDelegate.swift */; };
@@ -74,8 +51,6 @@
 		699BB8CF2681E22100524FC6 /* MBProgressHUD.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB87C2681CA7D00524FC6 /* MBProgressHUD.xcframework */; };
 		699BB8D02681E22100524FC6 /* MBProgressHUD.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB87C2681CA7D00524FC6 /* MBProgressHUD.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		699BB8D12681E22300524FC6 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691CCF9F23F8240D007768DF /* NetworkExtension.framework */; };
-		699BB8DB2681E22B00524FC6 /* SwiftSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88C2681CA9E00524FC6 /* SwiftSocket.xcframework */; };
-		699BB8DC2681E22B00524FC6 /* SwiftSocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88C2681CA9E00524FC6 /* SwiftSocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		699BB8DD2681E22D00524FC6 /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88F2681CAA100524FC6 /* SwiftyJSON.xcframework */; };
 		699BB8DE2681E22D00524FC6 /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88F2681CAA100524FC6 /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		699BB9082681E30900524FC6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6940EC91240A756D0029F526 /* AVFoundation.framework */; };
@@ -90,7 +65,6 @@
 		69FA419624050059005CF3FA /* HopError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FA419524050059005CF3FA /* HopError.swift */; };
 		69FA419724050059005CF3FA /* HopError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FA419524050059005CF3FA /* HopError.swift */; };
 		69FA41D3240667E1005CF3FA /* SVN.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 695E4C372401778600A13631 /* SVN.xcdatamodeld */; };
-		7C1E58AE25417EDD0032F005 /* gfw.plist in Resources */ = {isa = PBXBuildFile; fileRef = 698A513E23FD08B900836E26 /* gfw.plist */; };
 		7C3D0524252AA5B800B59255 /* Miner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C3D0523252AA5B800B59255 /* Miner.swift */; };
 		7C9D51832532F0710083E2F5 /* HopConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FA41912404DBCD005CF3FA /* HopConstants.swift */; };
 		7CE0EAFE24204F9E00F23A5A /* SystemSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CE0EAFD24204F9E00F23A5A /* SystemSettingTableViewController.swift */; };
@@ -124,18 +98,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				699BB8DC2681E22B00524FC6 /* SwiftSocket.xcframework in Embed Frameworks */,
-				6901E600268580FA007223E8 /* lwip.xcframework in Embed Frameworks */,
-				6901E5FE26858074007223E8 /* CocoaLumberjackSwift.xcframework in Embed Frameworks */,
-				6901E60C268581B1007223E8 /* Yaml.xcframework in Embed Frameworks */,
 				699BB8C82681E21600524FC6 /* CocoaAsyncSocket.xcframework in Embed Frameworks */,
-				6901E60A268581B1007223E8 /* tun2socks.xcframework in Embed Frameworks */,
 				2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */,
-				6901E5FC26858074007223E8 /* CocoaLumberjack.xcframework in Embed Frameworks */,
 				699BB8D02681E22100524FC6 /* MBProgressHUD.xcframework in Embed Frameworks */,
-				6901E60E26858300007223E8 /* NEKit.xcframework in Embed Frameworks */,
-				6901E602268580FA007223E8 /* MMDB.xcframework in Embed Frameworks */,
-				6901E608268581B1007223E8 /* Resolver.xcframework in Embed Frameworks */,
 				699BB8DE2681E22D00524FC6 /* SwiftyJSON.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -154,7 +119,6 @@
 		2B865BC92835044700B57529 /* AdvertiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseView.swift; sourceTree = "<group>"; };
 		2BE4A670284AE6C100966578 /* SocksV5Pipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5Pipe.swift; sourceTree = "<group>"; };
 		2BE4A672284B02E000966578 /* SocksV5RemoteSocket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocksV5RemoteSocket.swift; sourceTree = "<group>"; };
-		691566C425356B8D004983F3 /* HOPIPRangeRule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HOPIPRangeRule.swift; sourceTree = "<group>"; };
 		691CCF9F23F8240D007768DF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		6924223F240D368F00590536 /* MinerChooseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerChooseTableViewController.swift; sourceTree = "<group>"; };
 		693E92CD24A880E500149A75 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -177,10 +141,6 @@
 		696A71F925149F2E004EA5DE /* NewAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountViewController.swift; sourceTree = "<group>"; };
 		696B02D325187B8E00F76A51 /* AppSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSetting.swift; sourceTree = "<group>"; };
 		696B02E8251A079500F76A51 /* RoundedCornerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCornerView.swift; sourceTree = "<group>"; };
-		698A513823FCE64E00836E26 /* HOPAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOPAdapter.swift; sourceTree = "<group>"; };
-		698A513A23FCE75700836E26 /* HOPAdapterFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOPAdapterFactory.swift; sourceTree = "<group>"; };
-		698A513C23FCF90700836E26 /* HOPDomainsRule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HOPDomainsRule.swift; sourceTree = "<group>"; };
-		698A513E23FD08B900836E26 /* gfw.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = gfw.plist; sourceTree = "<group>"; };
 		698A514223FD58DC00836E26 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		698D07612567700200A55656 /* UserManualViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManualViewController.swift; sourceTree = "<group>"; };
 		698D07692567A4C000A55656 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
@@ -227,19 +187,10 @@
 			files = (
 				699BB9082681E30900524FC6 /* AVFoundation.framework in Frameworks */,
 				699BB8DD2681E22D00524FC6 /* SwiftyJSON.xcframework in Frameworks */,
-				6901E5FF268580F9007223E8 /* lwip.xcframework in Frameworks */,
-				6901E609268581B1007223E8 /* tun2socks.xcframework in Frameworks */,
-				699BB8DB2681E22B00524FC6 /* SwiftSocket.xcframework in Frameworks */,
-				6901E5FD26858074007223E8 /* CocoaLumberjackSwift.xcframework in Frameworks */,
-				6901E60D26858300007223E8 /* NEKit.xcframework in Frameworks */,
-				6901E5FB26858074007223E8 /* CocoaLumberjack.xcframework in Frameworks */,
-				6901E60B268581B1007223E8 /* Yaml.xcframework in Frameworks */,
 				2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */,
 				699BB8C72681E21600524FC6 /* CocoaAsyncSocket.xcframework in Frameworks */,
 				699BB8CF2681E22100524FC6 /* MBProgressHUD.xcframework in Frameworks */,
-				6901E607268581B1007223E8 /* Resolver.xcframework in Frameworks */,
 				699BB8D12681E22300524FC6 /* NetworkExtension.framework in Frameworks */,
-				6901E601268580FA007223E8 /* MMDB.xcframework in Frameworks */,
 				2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -248,10 +199,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				694FB26D2682CF590024011A /* SwiftSocket.xcframework in Frameworks */,
 				693D40402684AB680013832A /* CocoaAsyncSocket.xcframework in Frameworks */,
 				694FB26F2682CF590024011A /* SwiftyJSON.xcframework in Frameworks */,
-				6901E60526858148007223E8 /* NEKit.xcframework in Frameworks */,
 				2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,11 +313,7 @@
 		69980C5923F7B3CD00829B09 /* extension */ = {
 			isa = PBXGroup;
 			children = (
-				691566C425356B8D004983F3 /* HOPIPRangeRule.swift */,
 				69980C5A23F7B3CD00829B09 /* PacketTunnelProvider.swift */,
-				698A513C23FCF90700836E26 /* HOPDomainsRule.swift */,
-				698A513A23FCE75700836E26 /* HOPAdapterFactory.swift */,
-				698A513823FCE64E00836E26 /* HOPAdapter.swift */,
 				69980C5C23F7B3CD00829B09 /* Info.plist */,
 				69980C5D23F7B3CD00829B09 /* extension.entitlements */,
 				69A47D69240EB1DD00C86CFF /* ApiService.swift */,
@@ -400,7 +345,6 @@
 				6940EC8F240A75460029F526 /* ScannerViewController.swift */,
 				698A514223FD58DC00836E26 /* Utils.swift */,
 				696A71EF2514680A004EA5DE /* Utils+ViewController.swift */,
-				698A513E23FD08B900836E26 /* gfw.plist */,
 				696A71F725148F5F004EA5DE /* ConfirmViewController.swift */,
 				696B02E8251A079500F76A51 /* RoundedCornerView.swift */,
 			);
@@ -491,7 +435,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				698A514423FD5BC900836E26 /* gfw.plist in Resources */,
 				693E92D624A89A9D00149A75 /* InfoPlist.strings in Resources */,
 				69980C3723F78D3F00829B09 /* LaunchScreen.storyboard in Resources */,
 				693E92D024A8816200149A75 /* Localizable.strings in Resources */,
@@ -506,7 +449,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7C1E58AE25417EDD0032F005 /* gfw.plist in Resources */,
 				2B0796292849A1F40034E09A /* gfw.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -577,15 +519,11 @@
 				69FA419724050059005CF3FA /* HopError.swift in Sources */,
 				69FA41932404DBCD005CF3FA /* HopConstants.swift in Sources */,
 				2BE4A671284AE6C100966578 /* SocksV5Pipe.swift in Sources */,
-				698A513923FCE64E00836E26 /* HOPAdapter.swift in Sources */,
 				2BE4A673284B02E000966578 /* SocksV5RemoteSocket.swift in Sources */,
-				698A513D23FCF90700836E26 /* HOPDomainsRule.swift in Sources */,
 				69A47D70240EB8C100C86CFF /* HopMessage.swift in Sources */,
-				691566C525356B8D004983F3 /* HOPIPRangeRule.swift in Sources */,
 				69FA418B2404B352005CF3FA /* DataShareManager.swift in Sources */,
 				69A47D6A240EB1DD00C86CFF /* ApiService.swift in Sources */,
 				2B07962B284A27F40034E09A /* SocksV5Server.swift in Sources */,
-				698A513B23FCE75700836E26 /* HOPAdapterFactory.swift in Sources */,
 				69980C5B23F7B3CD00829B09 /* PacketTunnelProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

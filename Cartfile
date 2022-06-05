@@ -1,6 +1,4 @@
-github "redeslab/NEKit"
 github "jdg/MBProgressHUD" ~> 1.2.0
-github "swiftsocket/SwiftSocket"
 github "SwiftyJSON/SwiftyJSON" ~> 4.0
 github "krzyzanowskim/CryptoSwift"
 github "robbiehanson/CocoaAsyncSocket" "master"

@@ -231,7 +231,7 @@ extension SocksV5RemoteSocket{
         }
         
         func readByLV(ready:@escaping (Data)->Void){
-                self.connection.readLength(HOPAdapter.PACK_HEAD_SIZE, completionHandler: {data, err in
+                self.connection.readLength(HopMessage.PACK_HEAD_SIZE, completionHandler: {data, err in
                         if let e = err{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] adapter read head length err[\(e)]")
                                 return

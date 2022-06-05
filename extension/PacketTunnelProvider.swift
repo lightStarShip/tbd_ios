@@ -7,7 +7,6 @@
 //
 
 import NetworkExtension
-import NEKit
 import SwiftyJSON
 
 extension Data {
@@ -21,9 +20,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         var proxyServer: SocksV5Server!
         let proxyServerPort :UInt16 = 31080
         let proxyServerAddress = "127.0.0.1";
-        var enablePacketProcessing = false
-        var interface: TUNInterface!
         
+        var golobal = false
         override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
                 NSLog("--------->Tunnel start ......")
                 
@@ -44,7 +42,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                         
                         let settings = try initSetting()
                         
-                        HOPDomainsRule.ISGlobalMode = (ops["GLOBAL_MODE"] as? Bool == true)
+                        self.golobal = (ops["GLOBAL_MODE"] as? Bool == true)
                         
                         self.setTunnelNetworkSettings(settings, completionHandler: {
                                 error in
@@ -104,16 +102,16 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 
                 let is_global = param["Global"].bool
                 if is_global != nil{
-                        HOPDomainsRule.ISGlobalMode = is_global!
-                        NSLog("--------->Global model changed...\(HOPDomainsRule.ISGlobalMode)...")
+                        self.golobal = is_global!
+                        NSLog("--------->Global model changed...\(self.golobal)...")
                 }
                 
                 let gt_status = param["GetModel"].bool
                 if gt_status != nil{
-                        guard let data = try? JSON(["Global": HOPDomainsRule.ISGlobalMode]).rawData() else{
+                        guard let data = try? JSON(["Global": self.golobal]).rawData() else{
                                 return
                         }
-                        NSLog("--------->App is querying golbal model [\(HOPDomainsRule.ISGlobalMode)]")
+                        NSLog("--------->App is querying golbal model [\(self.golobal)]")
                         
                         guard let handler = completionHandler else{
                                 return
@@ -136,14 +134,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 extension PacketTunnelProvider: ProtocolDelegate{
         
         private func exit(){
-                NSLog("--------->Packet process 3333 status[\(self.enablePacketProcessing)]......")
-                if enablePacketProcessing {
-                        interface.stop()
-                        interface = nil
-                        DNSServer.currentServer = nil
-                        
-                }
-                RawSocketFactory.TunnelProvider = nil
+                NSLog("--------->PacketTunnelProvider closed ......")
+      
                 proxyServer.stop()
                 proxyServer = nil
                 Darwin.exit(EXIT_SUCCESS)
