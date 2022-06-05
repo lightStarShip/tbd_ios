@@ -77,16 +77,14 @@ public class SocksV5RemoteSocket:NSObject{
                 let miner_host = NWHostEndpoint(hostname: ApiService.pInst.minerIP!,
                                                 port: "\(ApiService.pInst.minerPort!)")
                 
-                let conn = provider.createTCPConnection(to: miner_host,
+                self.connection = provider.createTCPConnection(to: miner_host,
                                                         enableTLS: false,
                                                         tlsParameters:nil,
                                                         delegate: nil)
                 
-                conn.addObserver(self, forKeyPath: "state",
+                self.connection.addObserver(self, forKeyPath: "state",
                                  options: .initial,
                                  context: nil)
-                
-                self.connection = conn
                 status = .connecting
                 
                 NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")

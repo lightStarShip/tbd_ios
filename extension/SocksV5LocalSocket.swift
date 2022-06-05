@@ -153,6 +153,7 @@ public class SocksV5LocalSocket:NSObject{
 // MARK: - Delegate methods for GCDAsyncSocket
 extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
         open func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
+                
                 if readStatus == .writeReply{
                         readStatus = .forwarding
                         NSLog("--------->[SID=\(self.sid)] socks5 local socket write v5 reply success")
