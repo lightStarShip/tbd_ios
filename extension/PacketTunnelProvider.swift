@@ -76,12 +76,19 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 let networkSettings = NEPacketTunnelNetworkSettings.init(tunnelRemoteAddress: proxyServerAddress)
                 networkSettings.mtu = NSNumber.init(value: 1500)
                 
-                let proxySettings = NEProxySettings.init()
+                let proxySettings = NEProxySettings()
                 proxySettings.excludeSimpleHostnames = true;
                 proxySettings.autoProxyConfigurationEnabled = true
                 proxySettings.proxyAutoConfigurationJavaScript = Utils.JavaScriptString
                 proxySettings.matchDomains=[""]
                 networkSettings.proxySettings = proxySettings;
+                
+//                let dnsSettings = NEDNSSettings(servers: [" 8.8.8.8", "8.8.4.4"])
+//                let dnsSettings = NEDNSOverHTTPSSettings(servers: ["8.8.8.8", "8.8.4.4"])
+//                let dnsSettings = NEDNSOverHTTPSSettings(servers: ["223.5.5.5","223.6.6.6","2400:3200:baba::1","2400:3200::1"])
+//                dnsSettings.serverURL = URL(string: "https://dns.google/dns-query")
+//                dnsSettings.matchDomains = [""]
+//                networkSettings.dnsSettings = dnsSettings
                 
                 let ipv4Settings = NEIPv4Settings(addresses: ["10.0.0.8"], subnetMasks: ["255.255.255.0"])
                 networkSettings.ipv4Settings = ipv4Settings;
@@ -135,7 +142,7 @@ extension PacketTunnelProvider: ProtocolDelegate{
         
         private func exit(){
                 NSLog("--------->PacketTunnelProvider closed ......")
-      
+                
                 proxyServer.stop()
                 proxyServer = nil
                 Darwin.exit(EXIT_SUCCESS)
