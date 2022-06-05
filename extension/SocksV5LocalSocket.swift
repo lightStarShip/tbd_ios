@@ -74,6 +74,7 @@ public class SocksV5LocalSocket:NSObject{
                      readingDomain,
                      readingIPv6Address,
                      readingPort,
+                     writeReply,
                      forwarding,
                      stopped
                 
@@ -97,26 +98,8 @@ public class SocksV5LocalSocket:NSObject{
                                 return "IPv6 address"
                         case .readingPort:
                                 return "reading port"
-                        case .forwarding:
-                                return "forwarding"
-                        case .stopped:
-                                return "stopped"
-                        }
-                }
-        }
-        
-        enum SOCKS5ProxyWriteStatus: CustomStringConvertible {
-                case invalid,
-                     sendingResponse,
-                     forwarding,
-                     stopped
-                
-                var description: String {
-                        switch self {
-                        case .invalid:
-                                return "invalid"
-                        case .sendingResponse:
-                                return "sending response"
+                        case .writeReply:
+                                return "write reply to app"
                         case .forwarding:
                                 return "forwarding"
                         case .stopped:
@@ -128,7 +111,6 @@ public class SocksV5LocalSocket:NSObject{
         
         private var socket: GCDAsyncSocket?
         private var readStatus: SOCKS5ProxyReadStatus = .invalid
-        private var writeStatus: SOCKS5ProxyWriteStatus = .invalid
         private var delegate:SocksV5PipeDelegate
         private(set) var sid:Int
         private var cmd:UInt8 = 0
@@ -171,8 +153,9 @@ public class SocksV5LocalSocket:NSObject{
 // MARK: - Delegate methods for GCDAsyncSocket
 extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
         open func socket(_ sock: GCDAsyncSocket, didWriteDataWithTag tag: Int) {
-                if readStatus == .forwarding{
-                        NSLog("--------->[SID=\(self.sid)] socks5 didWriteDataWithTag[\(tag)]")
+                if readStatus == .writeReply{
+                        readStatus = .forwarding
+                        NSLog("--------->[SID=\(self.sid)] socks5 local socket write v5 reply success")
                         let target = "\(destinationHost!):\(destinationPort!)"
                         self.delegate.localSocketReady(target:target)
                 }
@@ -414,8 +397,8 @@ extension SocksV5LocalSocket{
                         }
                         NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         
+                        readStatus = .writeReply
                         self.write(data: SocksV5LocalSocket.Socks5Reply)
-                        readStatus = .forwarding
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")

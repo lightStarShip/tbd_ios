@@ -74,15 +74,17 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
         }
         
         public func localSocketReady(target: String) {
-                self.status = self.status | SocksV5Pipe.localReady
-                
-                let remote = SocksV5RemoteSocket(sid: self.pid, target: target, delegate:self)
-                self.remoteSock = remote
                 pipeQueue.async {
+                        self.status = self.status | SocksV5Pipe.localReady
+                        
+                        let remote = SocksV5RemoteSocket(sid: self.pid,
+                                                         target: target,
+                                                         delegate:self)
+                        self.remoteSock = remote
                         self.remoteSock?.startWork()
+                        
+                        NSLog("--------->[SID=\(self.pid)] pipe[\(target)] local socket is ready!")
                 }
-                
-                NSLog("--------->[SID=\(self.pid)] pipe local socket is ready!")
         }
         
         public func gotAppData(data: Data) {
