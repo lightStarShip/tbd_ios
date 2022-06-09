@@ -65,7 +65,7 @@ public class SocksV5RemoteSocket:NSObject{
                 self.sid = sid
                 self.target = target
                 super.init()
-                NSLog("--------->[SID=\(self.sid)] adapter  obj created")
+//                NSLog("--------->[SID=\(self.sid)] adapter  obj created")
         }
         
         func startWork(){

@@ -123,7 +123,7 @@ public class SocksV5LocalSocket:NSObject{
                 super.init()
                 socket.delegate = self
                 self.socket = socket
-                NSLog("--------->[SID=\(self.sid)] new socks5 obj created")
+//                NSLog("--------->[SID=\(self.sid)] new socks5 obj created")
         }
         public func startWork(){
                 readStatus = .readingVersionIdentifierAndNumberOfMethods

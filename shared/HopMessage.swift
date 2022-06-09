@@ -10,7 +10,7 @@ import Foundation
 
 public class HopMessage:NSObject{
         public static let PACK_HEAD_SIZE = 4
-        public static let MAX_BUFFER_SIZE =  (1<<20)
+        public static let MAX_BUFFER_SIZE =  (1<<19) - 1
         static let SetupSynFormat = "{\"IV\":%@,\"SubAddr\":\"%@\"}"
         public static func SetupMsg(iv:Data,
                                     subAddr:String)throws -> Data{

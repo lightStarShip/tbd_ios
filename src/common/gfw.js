@@ -834,7 +834,6 @@ var rules = [
   "||googlesource.com",
   "||googleusercontent.com",
   "||googlevideo.com",
-  "||googlevideo.com",
   "||googleweblight.com",
   "||googlezip.net",
   "||groups.google.cn",
