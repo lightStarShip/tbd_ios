@@ -62,7 +62,9 @@ public class SocksV5LocalSocket:NSObject{
         public static let Socks5Reply = Data([0x05, 0x00, 0x00, 0x01,
                                               0x00, 0x00, 0x00, 0x00,
                                               0x00, 0x00])
+        public static let Socks5Reply_2 = Data([0x05, 0x00, 0x00])
         public static let SocksVersion = 5
+//        private static let lReadQueue = DispatchQueue.init(label: "Local Reading Queue")
         
         enum SOCKS5ProxyReadStatus: CustomStringConvertible {
                 case invalid,
@@ -145,8 +147,10 @@ public class SocksV5LocalSocket:NSObject{
                 self.write(data: data)
         }
         
-        public func readAppData(){
-                self.readData()
+        public func  startReadAppData(){
+//                SocksV5LocalSocket.lReadQueue.async {
+                        self.readData()
+//                }
         }
 }
 
@@ -159,6 +163,8 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         let target = "\(destinationHost!):\(destinationPort!)"
                         self.delegate.localSocketReady(target:target)
 //                        NSLog("--------->[SID=\(self.sid)] socks5 local socket ready[\(target)]")
+                }else{
+                        NSLog("--------->[SID=\(self.sid)] socks5 data did write readStatus:[\(readStatus)]")
                 }
         }
         
@@ -167,8 +173,9 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         self.readTarget(data: data, withTag:tag)
                         return
                 }
-//                NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
+                NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
                 self.delegate.gotAppData(data:data)
+                self.startReadAppData()
         }
         
         open func socketDidDisconnect(_ socket: GCDAsyncSocket, withError err: Error?) {
@@ -279,9 +286,9 @@ extension SocksV5LocalSocket{
                          Where:
                          o  VER    protocol version: X’05’
                          o  CMD
-                         o  CONNECT X’01’
-                         o  BIND X’02’
-                         o  UDP ASSOCIATE X’03’
+                                 o  CONNECT X’01’
+                                 o  BIND X’02’
+                                 o  UDP ASSOCIATE X’03’
                          o  RSV    RESERVED
                          o  ATYP   address type of following address
                          o  IP V4 address: X’01’
@@ -399,7 +406,16 @@ extension SocksV5LocalSocket{
 //                        NSLog("--------->[SID=\(self.sid)] socks5 step[final] [port=\(destinationPort!)]")
                         
                         readStatus = .writeReply
-                        self.write(data: SocksV5LocalSocket.Socks5Reply)
+                        if self.cmd == 1{
+                                NSLog("--------->[SID=\(self.sid)] cmd[\(self.cmd)] typ is connect")
+                                self.write(data: SocksV5LocalSocket.Socks5Reply)
+//                        }else if self.cmd == 3{
+//                                var res_data = Data.init(SocksV5LocalSocket.Socks5Reply_2)
+//                                res_data.append()
+//                                self.write(data: SocksV5LocalSocket.Socks5Reply_2)
+                        }else{
+                                self.stopWork(reason: "--------->[SID=\(self.sid)]  cmd[\(self.cmd)] typ invalid")
+                        }
                         break
                 default:
                         self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 invalid status=\(readStatus.description)")

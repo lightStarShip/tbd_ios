@@ -23,8 +23,6 @@ open class SocksV5Pipe:NSObject{
         public static let remoteReady = 0x10
         public static let ready = 0x11
         
-        private let pipeQueue = DispatchQueue.init(label: "Big Dipper Pipe Queue")
-        
         private var localSock:SocksV5LocalSocket?
         private var remoteSock:SocksV5RemoteSocket?
         private(set) var pid:Int
@@ -39,9 +37,7 @@ open class SocksV5Pipe:NSObject{
         
         func setLocalSocket(socket s:SocksV5LocalSocket){
                 self.localSock = s
-                pipeQueue.async {
-                        self.localSock?.startWork()
-                }
+                self.localSock?.startWork()
         }
         
         private func stopWork(reason:String?=nil){
@@ -58,17 +54,15 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
         
         public func localSocketReady(target: String) {
                 self.targetHost = target
-                pipeQueue.async {
-                        self.status = self.status | SocksV5Pipe.localReady
-                        
-                        let remote = SocksV5RemoteSocket(sid: self.pid,
-                                                         target: target,
-                                                         delegate:self)
-                        self.remoteSock = remote
-                        self.remoteSock?.startWork()
-                        
-                        NSLog("--------->[SID=\(self.pid)] pipe host found [\(target)] ")
-                }
+                self.status = self.status | SocksV5Pipe.localReady
+                
+                let remote = SocksV5RemoteSocket(sid: self.pid,
+                                                 target: target,
+                                                 delegate:self)
+                self.remoteSock = remote
+                self.remoteSock?.startWork()
+                
+                NSLog("--------->[SID=\(self.pid)] pipe host found [\(target)] ")
         }
         
         public func remoteSockeyReady() {
@@ -79,21 +73,18 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
                 }
                 
                 NSLog("--------->[SID=\(self.pid)] pipe[\(self.targetHost!)] is ready!")
-                
-                pipeQueue.async {self.localSock?.readAppData()}
-                pipeQueue.async {self.remoteSock?.readSrvData()}
+                self.localSock?.startReadAppData()
+                self.remoteSock?.startReadSrvData()
         }
         
         public func gotAppData(data: Data) {
-//                NSLog("--------->[SID=\(self.pid)] app-----[\(data.count)]----->server")
-                pipeQueue.async { self.remoteSock?.writeToServer(data: data)}
-                pipeQueue.async { self.localSock?.readAppData()}
+                NSLog("--------->[SID=\(self.pid)] app-----[\(data.count)]----->server")
+                self.remoteSock?.writeToServer(data: data)
         }
         
         public func gotServerData(data: Data){
-//                NSLog("--------->[SID=\(self.pid)] app<++++[\(data.count)]+++++server")
-                pipeQueue.async {self.localSock?.writeToApp(data: data)}
-                pipeQueue.async { self.remoteSock?.readSrvData() }
+                NSLog("--------->[SID=\(self.pid)] app<++++[\(data.count)]+++++server")
+                self.localSock?.writeToApp(data: data)
         }
         
         

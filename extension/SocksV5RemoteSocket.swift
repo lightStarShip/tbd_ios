@@ -45,7 +45,7 @@ public class SocksV5RemoteSocket:NSObject{
                 }
         }
         
-        
+//        private static let rReadQueue = DispatchQueue.init(label: "Remote Reading Queue")
         private var connection: NWTCPConnection!
         private var status:AdapterStatus = .invalid
         private var delegate:SocksV5PipeDelegate
@@ -114,12 +114,14 @@ public class SocksV5RemoteSocket:NSObject{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] write encoded  data to server err:[\(e)]")
                                 return
                         }
-//                        NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
+                        NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
                 }
         }
         
-        func readSrvData(){
-                readByLV(ready: self.decodeSrvData)
+        func startReadSrvData(){
+//                SocksV5RemoteSocket.rReadQueue.async {
+                        self.readByLV(ready: self.decodeSrvData)
+//                }
         }
         
         private func decodeSrvData(data:Data){
@@ -129,6 +131,7 @@ public class SocksV5RemoteSocket:NSObject{
                         return
                 }
                 self.delegate.gotServerData(data:decoded_data)
+                self.startReadSrvData()
         }
 }
 
