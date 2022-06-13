@@ -240,11 +240,11 @@ extension SocksV5RemoteSocket{
                                 return
                         }
                         let len = d.ToInt()
+                        NSLog("--------->[SID=\(self.sid)] adapter lv header len=\(len)")
                         guard len > 0 else{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] adapter head length[\(len)] is invalid")
                                 return
                         }
-                        
                         self.connection.readLength(len) { data, err in
                                 if let e = err{
                                         self.stopWork(reason: "--------->[SID=\(self.sid)] adapter read content err[\(e)]")
