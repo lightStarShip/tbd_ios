@@ -45,7 +45,6 @@ public class SocksV5RemoteSocket:NSObject{
                 }
         }
         
-//        private static let rReadQueue = DispatchQueue.init(label: "Remote Reading Queue")
         private var connection: NWTCPConnection!
         private var status:AdapterStatus = .invalid
         private var delegate:SocksV5PipeDelegate
@@ -65,7 +64,7 @@ public class SocksV5RemoteSocket:NSObject{
                 self.sid = sid
                 self.target = target
                 super.init()
-//                NSLog("--------->[SID=\(self.sid)] adapter  obj created")
+                //                NSLog("--------->[SID=\(self.sid)] adapter  obj created")
         }
         
         func startWork(){
@@ -78,16 +77,16 @@ public class SocksV5RemoteSocket:NSObject{
                                                 port: "\(ApiService.pInst.minerPort!)")
                 
                 self.connection = provider.createTCPConnection(to: miner_host,
-                                                        enableTLS: false,
-                                                        tlsParameters:nil,
-                                                        delegate: nil)
+                                                               enableTLS: false,
+                                                               tlsParameters:nil,
+                                                               delegate: nil)
                 
                 self.connection.addObserver(self, forKeyPath: "state",
-                                 options: .initial,
-                                 context: nil)
+                                            options: .initial,
+                                            context: nil)
                 status = .connecting
                 
-//                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
+                //                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
         }
         
         
@@ -119,13 +118,11 @@ public class SocksV5RemoteSocket:NSObject{
         }
         
         func startReadSrvData(){
-//                SocksV5RemoteSocket.rReadQueue.async {
-                        self.readByLV(ready: self.decodeSrvData)
-//                }
+                self.readByLV(ready: self.decodeSrvData)
         }
         
         private func decodeSrvData(data:Data){
-//                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
+                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
                         self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
                         return
@@ -148,7 +145,7 @@ extension SocksV5RemoteSocket{
                 
                 switch connection!.state {
                 case .connected:
-//                        NSLog("--------->[SID=\(self.sid)] adapter step[3] miner conntected")
+                        //                        NSLog("--------->[SID=\(self.sid)] adapter step[3] miner conntected")
                         self.setupMsg()
                         break
                         
@@ -198,7 +195,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-//                NSLog("--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
+                //                NSLog("--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
                 guard let prob_data = try? HopMessage.ProbMsg(target: self.target!) else{
                         self.stopWork(reason: "--------->didRead[\(self.sid)]miner setup protocol failed")
                         return
@@ -227,7 +224,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-//                NSLog("--------->[SID=\(self.sid)] adapter step[final] prob success")
+                //                NSLog("--------->[SID=\(self.sid)] adapter step[final] prob success")
                 self.status = .forwarding
                 self.delegate.remoteSockeyReady()
         }

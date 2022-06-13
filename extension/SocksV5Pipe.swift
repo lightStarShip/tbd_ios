@@ -18,6 +18,10 @@ public protocol SocksV5PipeDelegate {
 }
 
 open class SocksV5Pipe:NSObject{
+        
+        private static let lWriteQueue = DispatchQueue.init(label: "Local Writing Queue")
+        private static let rWriteQueue = DispatchQueue.init(label: "Remote Writing Queue")
+        
         public static let inited = 0x0
         public static let localReady = 0x01
         public static let remoteReady = 0x10
@@ -78,13 +82,15 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
         }
         
         public func gotAppData(data: Data) {
-                NSLog("--------->[SID=\(self.pid)] app-----[\(data.count)]----->server")
-                self.remoteSock?.writeToServer(data: data)
+                SocksV5Pipe.rWriteQueue.sync {
+                        self.remoteSock?.writeToServer(data: data)
+                }
         }
         
         public func gotServerData(data: Data){
-                NSLog("--------->[SID=\(self.pid)] app<++++[\(data.count)]+++++server")
-                self.localSock?.writeToApp(data: data)
+                SocksV5Pipe.lWriteQueue.sync {
+                        self.localSock?.writeToApp(data: data)
+                }
         }
         
         
