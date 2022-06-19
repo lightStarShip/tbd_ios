@@ -873,6 +873,7 @@ var domains = [
 "*.youxu.info*",
 "*.lianyue.net*",
 "*.youtube.com*",
+"*.googleadservices.com*",
 "*.zhreader.com*",
 "*.tcno.net*",
 "*.ncn.org*",
@@ -1241,6 +1242,7 @@ var domains = [
 "*.tw*",
 "*.gclooney.com*",
 "*.googlesyndication.com*",
+"*.doubleclick.net*",
 "*.hkej.com*",
 "*.blog.de*",
 "*.koolsolutions.com*",
@@ -1743,7 +1745,6 @@ var domains = [
 "*.tl.gd*",
 "*.ourdearamy.com*",
 "*.epochtimes.fr*",
-"*.google.com.hk*",
 "*.wapedia.mobi*",
 "*.allaboutalpha.com*",
 "*.graylog2.org*",
@@ -2425,6 +2426,7 @@ var domains = [
 "*.crd-net.org*",
 "*.hk*",
 "*.googleapis.com*",
+"*.pki.goog*",
 "*.ydy.com*",
 "*.bipic.net*",
 "*.tibet.com*",
@@ -2482,6 +2484,7 @@ var domains = [
 "*.darpa.mil*",
 "*.wtfpeople.com*",
 "*.1-apple.com.tw*",
+"*.ggpht.com*",
 ];
 
 var proxy = "SOCKS5 127.0.0.1:31080; SOCKS 127.0.0.1:31080; DIRECT;";
