@@ -64,12 +64,12 @@ public class SocksV5RemoteSocket:NSObject{
                 self.sid = sid
                 self.target = target
                 super.init()
-                //                NSLog("--------->[SID=\(self.sid)] adapter  obj created")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter  obj created")
         }
         
         func startWork(){
                 guard let provider = SocksV5Server.provider else{
-                        NSLog("--------->[SID=\(self.sid)] failed start, provider is nil")
+                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] failed start, provider is nil")
                         return
                 }
                 
@@ -86,13 +86,13 @@ public class SocksV5RemoteSocket:NSObject{
                                             context: nil)
                 status = .connecting
                 
-                //                NSLog("--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter step[2] new remote obj start to work miner[\(miner_host.description)]")
         }
         
         
         func stopWork(reason:String?=nil){
                 if let r = reason {
-                        NSLog(r)
+                        PacketLog(debug:need_debug_packet, r)
                 }
                 guard self.status != .stopped else{
                         return
@@ -113,7 +113,7 @@ public class SocksV5RemoteSocket:NSObject{
                                 self.stopWork(reason:"--------->[SID=\(self.sid)] write encoded  data to server err:[\(e)]")
                                 return
                         }
-                        NSLog("--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
+                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter write lv_data[\(lv_data.count)] success")
                 }
         }
         
@@ -122,7 +122,7 @@ public class SocksV5RemoteSocket:NSObject{
         }
         
         private func decodeSrvData(data:Data){
-                NSLog("--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter get packets[len=\(data.count)] from miner")
                 guard let decoded_data = self.readEncoded(data: data) else{
                         self.stopWork(reason: "--------->SID=\(self.sid)] adapter step[7] forward invalid coded data")
                         return
@@ -145,7 +145,7 @@ extension SocksV5RemoteSocket{
                 
                 switch connection!.state {
                 case .connected:
-                        //                        NSLog("--------->[SID=\(self.sid)] adapter step[3] miner conntected")
+                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter step[3] miner conntected")
                         self.setupMsg()
                         break
                         
@@ -195,7 +195,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-                //                NSLog("--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter step[4] prepare to prob")
                 guard let prob_data = try? HopMessage.ProbMsg(target: self.target!) else{
                         self.stopWork(reason: "--------->didRead[\(self.sid)]miner setup protocol failed")
                         return
@@ -224,7 +224,7 @@ extension SocksV5RemoteSocket{
                         return
                 }
                 
-                //                NSLog("--------->[SID=\(self.sid)] adapter step[final] prob success")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter step[final] prob success")
                 self.status = .forwarding
                 self.delegate.remoteSockeyReady()
         }
@@ -240,7 +240,7 @@ extension SocksV5RemoteSocket{
                                 return
                         }
                         let len = d.ToInt()
-                        NSLog("--------->[SID=\(self.sid)] adapter lv header len=\(len)")
+                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] adapter lv header len=\(len)")
                         guard len > 0 else{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] adapter head length[\(len)] is invalid")
                                 return

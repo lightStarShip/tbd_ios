@@ -42,7 +42,7 @@ open class SocksV5Server: NSObject {
                                                    socketQueue: proxyQueue)
                 
                 try listenSocket.accept(onInterface: self.address, port: self.port)
-                NSLog("--------->Proxy server started......\(self.address):\(self.port)")
+                PacketLog(debug:need_debug_packet, "--------->Proxy server started......\(self.address):\(self.port)")
         }
         
         open func stop() {

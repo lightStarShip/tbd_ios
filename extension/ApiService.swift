@@ -45,3 +45,10 @@ public class ApiService:NSObject{
                 return self.aesKey.bytes
         }
 }
+let need_debug_packet:Bool = false
+public func PacketLog(debug:Bool, _ format: String, _ args: CVarArg...){
+        if !debug{
+                return
+        }
+        NSLog(format, args)
+}

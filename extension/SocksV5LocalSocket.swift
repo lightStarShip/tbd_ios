@@ -124,19 +124,19 @@ public class SocksV5LocalSocket:NSObject{
                 super.init()
                 socket.delegate = self
                 self.socket = socket
-                //                NSLog("--------->[SID=\(self.sid)] new socks5 obj created")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] new socks5 obj created")
         }
         public func startWork(){
                 readStatus = .readingVersionIdentifierAndNumberOfMethods
                 self.readTo(len: 2)
-                //                NSLog("--------->[SID=\(self.sid)] socks5 step[1]  read fisrt 2 data")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 step[1]  read fisrt 2 data")
         }
         
         public func stopWork(reason:String? =  nil){
                 guard let s = self.socket else{
                         return
                 }
-                NSLog(reason ?? "--------->[SID=\(self.sid)] local socket stop work")
+                PacketLog(debug:need_debug_packet, reason ?? "--------->[SID=\(self.sid)] local socket stop work")
                 s.disconnect()
                 self.socket = nil
                 self.delegate.pipeBreakUp()
@@ -144,7 +144,7 @@ public class SocksV5LocalSocket:NSObject{
         
         public func writeToApp(data:Data){
                 self.write(data: data)
-                NSLog("--------->[SID=\(self.sid)] socks5 local socket write[\(data.count)]")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 local socket write[\(data.count)]")
         }
         
         public func  startReadAppData(){
@@ -171,21 +171,21 @@ extension SocksV5LocalSocket:GCDAsyncSocketDelegate{
                         self.readTarget(data: data, withTag:tag)
                         return
                 }
-                NSLog("--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 got app data [len=\(data.count)]")
                 self.startReadAppData()
                 self.delegate.gotAppData(data:data)
         }
         
         open func socketDidDisconnect(_ socket: GCDAsyncSocket, withError err: Error?) {
-                NSLog("--------->[SID=\(self.sid)] socks5 socketDidDisconnect [err=\(err?.localizedDescription ?? "<->")]")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 socketDidDisconnect [err=\(err?.localizedDescription ?? "<->")]")
         }
         
         open func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
-                NSLog("--------->[SID=\(self.sid)] socks5 didConnectToHost [host=\(host):\(port)]")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 didConnectToHost [host=\(host):\(port)]")
         }
         
         open func socketDidSecure(_ sock: GCDAsyncSocket) {
-                NSLog("--------->[SID=\(self.sid)] socks5 socketDidSecure")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 socketDidSecure")
         }
 }
 
@@ -265,7 +265,7 @@ extension SocksV5LocalSocket{
                         }
                         self.readStatus = .readingMethods
                         self.readTo(len: UInt(socks_len))
-                        //                        NSLog("--------->[SID=\(self.sid)] socks5 step[2] start to read method[\(socks_len)]")
+                        //                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 step[2] start to read method[\(socks_len)]")
                         break
                         
                         /*
@@ -317,7 +317,7 @@ extension SocksV5LocalSocket{
                         self.write(data: SocksV5LocalSocket.Socks5Ver)
                         readStatus = .readingConnectHeader
                         self.readTo(len: 4)
-                        //                        NSLog("--------->[SID=\(self.sid)] socks5 step[3] start to read header ")
+                        //                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 step[3] start to read header ")
                         break
                         
                 case .readingConnectHeader:
@@ -349,7 +349,7 @@ extension SocksV5LocalSocket{
                                 self.stopWork(reason: "--------->[SID=\(self.sid)] socks5 step[4] [typ=\(typ)] invalid")
                                 return
                         }
-                        //                        NSLog("--------->[SID=\(self.sid)] socks5 step[4] start to read host [typ=\(typ)]")
+                        //                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 step[4] start to read host [typ=\(typ)]")
                         break
                 case .readingIPv4Address:
                         var address = Data(count: Int(INET_ADDRSTRLEN))
@@ -363,7 +363,7 @@ extension SocksV5LocalSocket{
                         
                         readStatus = .readingPort
                         self.readTo(len: 2)
-                        NSLog("--------->[SID=\(self.sid)] socks5  +IPV4+  step[5] [host=\(destinationHost!)]")
+                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5  +IPV4+  step[5] [host=\(destinationHost!)]")
                         break
                 case .readingDomainLength:
                         guard data.count == 1 else{
@@ -372,13 +372,13 @@ extension SocksV5LocalSocket{
                         }
                         readStatus = .readingDomain
                         self.readTo(len:UInt(data[0]))
-                        //                        NSLog("--------->[SID=\(self.sid)] socks5 step[5] host [len=\(data[0])]")
+                        //                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 step[5] host [len=\(data[0])]")
                         break
                 case .readingDomain:
                         destinationHost = String(data: data, encoding: .utf8)
                         readStatus = .readingPort
                         self.readTo(len: 2)
-                        //                        NSLog("--------->[SID=\(self.sid)] socks5 step[6] [host=\(destinationHost!)]")
+                        //                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 step[6] [host=\(destinationHost!)]")
                         break
                 case .readingIPv6Address:
                         var address = Data(count: Int(INET6_ADDRSTRLEN))
@@ -391,7 +391,7 @@ extension SocksV5LocalSocket{
                         destinationHost = String(data: address, encoding: .utf8)
                         readStatus = .readingPort
                         self.readTo(len: 2)
-                        NSLog("--------->[SID=\(self.sid)] socks5 +IPV6+ step[5] [host=\(destinationHost!)]")
+                        PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] socks5 +IPV6+ step[5] [host=\(destinationHost!)]")
                         break
                         
                 case .readingPort:
@@ -403,7 +403,7 @@ extension SocksV5LocalSocket{
                                 destinationPort = Int($0.load(as: UInt16.self).bigEndian)
                         }
                         guard self.cmd == 1 else{
-                                NSLog("--------->[SID=\(self.sid)] cmd[\(self.cmd)] typ is not connect")
+                                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.sid)] cmd[\(self.cmd)] typ is not connect")
                                 return
                         }
                         readStatus = .writeReply

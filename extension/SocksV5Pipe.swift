@@ -50,7 +50,7 @@ open class SocksV5Pipe:NSObject{
                 self.remoteSock = nil
                 self.localSock = nil
                 SocksV5Server.RemoveCachedPipe(pid: self.pid)
-                NSLog(reason ?? "--------->[SID=\(self.pid)] pipe[\(self.targetHost!)] stop work without reason")
+                PacketLog(debug:need_debug_packet, reason ?? "--------->[SID=\(self.pid)] pipe[\(self.targetHost!)] stop work without reason")
         }
 }
 
@@ -66,7 +66,7 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
                 self.remoteSock = remote
                 self.remoteSock?.startWork()
                 
-                NSLog("--------->[SID=\(self.pid)] pipe host found [\(target)] ")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.pid)] pipe host found [\(target)] ")
         }
         
         public func remoteSockeyReady() {
@@ -76,7 +76,7 @@ extension SocksV5Pipe:SocksV5PipeDelegate{
                         return
                 }
                 
-                NSLog("--------->[SID=\(self.pid)] pipe[\(self.targetHost!)] is ready!")
+                PacketLog(debug:need_debug_packet, "--------->[SID=\(self.pid)] pipe[\(self.targetHost!)] is ready!")
                 self.localSock?.startReadAppData()
                 self.remoteSock?.startReadSrvData()
         }
