@@ -111,6 +111,10 @@ extension Data{
                 let len = Int(b[3]) | Int(b[2])<<8 | Int(b[1])<<16 | Int(b[0])<<24
                 return len
         }
+        
+        var hexString: String {
+                return self.reduce("", { $0 + String(format: "%02x", $1) })
+        }
 }
 
 public func DataWithLen(data:Data) -> Data {

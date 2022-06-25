@@ -9,39 +9,25 @@
 import NetworkExtension
 import SwiftyJSON
 
-extension Data {
-        var hexString: String {
-                return self.reduce("", { $0 + String(format: "%02x", $1) })
-        }
-}
-
 class PacketTunnelProvider: NEPacketTunnelProvider {
         let httpQueue = DispatchQueue.global(qos: .userInteractive)
-        var proxyServer: SocksV5Server!
         let proxyServerPort :UInt16 = 31080
         let proxyServerAddress = "127.0.0.1";
+        
+//        var pendingStartCompletion: ((Error?) -> Void)?
         
         var golobal = false
         override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
                 NSLog("--------->Tunnel start ......")
-                
-                if proxyServer != nil {
-                        proxyServer.stop()
-                        proxyServer = nil
-                }
                 
                 guard let ops = options else {
                         completionHandler(NSError.init(domain: "PTP", code: -1, userInfo: nil))
                         NSLog("--------->Options is empty ......")
                         return
                 }
-                
                 do {
                         try ApiService.pInst.setup(param: ops)
-                        try Utils.initJavaScript()
-                        
                         let settings = try initSetting()
-                        
                         self.golobal = (ops["GLOBAL_MODE"] as? Bool == true)
                         
                         self.setTunnelNetworkSettings(settings, completionHandler: {
@@ -51,18 +37,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         NSLog("--------->setTunnelNetworkSettings err:\(error!.localizedDescription)")
                                         return
                                 }
-                                
-                                self.proxyServer = SocksV5Server(address: self.proxyServerAddress,
-                                                                 port: self.proxyServerPort,
-                                                                 provider: self)
-                                
-                                do {
-                                        try self.proxyServer.start()
-                                }catch let err{
-                                        completionHandler(err)
-                                        NSLog("--------->Proxy start err:\(err.localizedDescription)")
-                                        return
-                                }
+                               
                                 completionHandler(nil)
                         })
                         
@@ -75,13 +50,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 
                 let networkSettings = NEPacketTunnelNetworkSettings.init(tunnelRemoteAddress: proxyServerAddress)
                 networkSettings.mtu = NSNumber.init(value: 1500)
+//                networkSettings.tunnelOverheadBytes = 150
                 
-                let proxySettings = NEProxySettings()
-//                proxySettings.excludeSimpleHostnames = true;
-                proxySettings.autoProxyConfigurationEnabled = true
-                proxySettings.proxyAutoConfigurationJavaScript = Utils.JavaScriptString
-                proxySettings.matchDomains=[""]
-                networkSettings.proxySettings = proxySettings;
+//                let proxySettings = NEProxySettings()
+//                proxySettings.autoProxyConfigurationEnabled = true
+//                proxySettings.proxyAutoConfigurationJavaScript = Utils.JavaScriptString
+//                proxySettings.matchDomains=[""]
+//                networkSettings.proxySettings = proxySettings;
                 
                 let dnsSettings = NEDNSSettings(servers: ["8.8.8.8", "1.1.1.1"])
 //                let dnsSettings = NEDNSOverHTTPSSettings(servers: ["8.8.8.8", "1.1.1.1"])
@@ -91,6 +66,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 networkSettings.dnsSettings = dnsSettings
                 
                 let ipv4Settings = NEIPv4Settings(addresses: ["10.0.0.8"], subnetMasks: ["255.255.255.0"])
+                ipv4Settings.includedRoutes = [.default()]
                 networkSettings.ipv4Settings = ipv4Settings;
                 
                 return networkSettings
@@ -99,7 +75,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
                 NSLog("--------->Tunnel stopping......")
                 completionHandler()
-                self.exit()
         }
         
         override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
@@ -138,20 +113,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 }
 
 
-extension PacketTunnelProvider: ProtocolDelegate{
-        
-        private func exit(){
-                NSLog("--------->PacketTunnelProvider closed ......")
-                
-                proxyServer.stop()
-                proxyServer = nil
-                Darwin.exit(EXIT_SUCCESS)
-        }
-        
-        func VPNShouldDone() {
-                self.exit()
-        }
-}
 
 //                proxySettings.httpEnabled = true;
 //                proxySettings.httpServer = NEProxyServer.init(address: proxyServerAddress, port: Int(proxyServerPort))
