@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CryptoSwift
 
 public class HopMessage:NSObject{
         public static let PACK_HEAD_SIZE = 4
