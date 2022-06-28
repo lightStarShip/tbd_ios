@@ -15,6 +15,8 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let proxyServerPort :UInt16 = 31080
         let proxyServerAddress = "127.0.0.1";
         
+        var tunIF:Tun2SimpleTunnelProtocol?
+        
         var golobal = false
         override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
                 NSLog("--------->Tunnel start ......")
@@ -29,7 +31,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                         let settings = try initSetting()
                         self.golobal = (ops["GLOBAL_MODE"] as? Bool == true)
                         var err:NSError? = nil
-                        Tun2SimpleInitApp(self, &err)
+                        
                         if let e = err{
                                 completionHandler(e)
                                 NSLog("--------->startTunnel failed\n[\(e.localizedDescription)]")
@@ -43,6 +45,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         return
                                 }
                                 completionHandler(nil)
+                                self.tunIF = Tun2SimpleNewTunnel(self, &err)
                                 self.readPackets()
                         })
                         
@@ -115,47 +118,49 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
 }
 
-extension PacketTunnelProvider:Tun2SimpleDeviceIProtocol{
+extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
+        func close() throws {
+//                self.exit()
+        }
+        
+        func write(_ p0: Data?, n: UnsafeMutablePointer<Int>?) throws {
+                guard let d = p0 else{
+                        NSLog("-------->output data to tun dev is nil......")
+//                        self.exit()
+                        return
+                }
+                NSLog("------>>>prepare to write back to tun written:[\(d)]")
+                
+                let packet = NEPacket(data: d, protocolFamily: sa_family_t(AF_INET))
+                packetFlow.writePacketObjects([packet])
+        }
+        
         func log(_ s: String?) {
                 guard let log = s else{
                         return
                 }
                 NSLog("-------->\(log)")
         }
-        
-        func stackClosed() {
-                self.exit()
-        }
-        
+
         private func exit(){
+                NSLog("-------->exit......")
                 Darwin.exit(EXIT_SUCCESS)
         }
-        func stack2Dev(_ data: Data?) {
-                guard let d = data else{
-                        NSLog("-------->stack2Dev with empty data......")
-                        self.exit()
-                        return
-                }
-                
-                let packet = NEPacket(data: d, protocolFamily: sa_family_t(AF_INET))
-                packetFlow.writePacketObjects([packet])
-        }
-        
+
         private func readPackets() {
                 NSLog("--------->start to read packets......")
                 packetFlow.readPacketObjects { packets in
-                        var err:NSError? = nil
                         var no:Int = 0
                         for p in packets{
-                                Tun2SimpleInputDevData(p.data, &no, &err)
-                                if err != nil{
-                                        NSLog("-------->Tun2SimpleInputDevData err[\(err!.localizedDescription)]......")
-                                        self.exit()
+                                do {
+                                        try self.tunIF?.write(p.data, ret0_: &no)
+//                                        NSLog("------>>>data written:[\(no)]")
+                                } catch let err{
+                                        NSLog("-------->Tun2SimpleInputDevData err[\(err.localizedDescription)]......")
                                         return
                                 }
                         }
                         self.readPackets()
                 }
         }
-        
 }
