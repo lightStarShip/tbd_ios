@@ -129,7 +129,7 @@ extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
 //                        self.exit()
                         return
                 }
-                NSLog("------>>>prepare to write back to tun written:[\(d)]")
+//                NSLog("------>>>prepare to write back to tun written:[\(d)]")
                 
                 let packet = NEPacket(data: d, protocolFamily: sa_family_t(AF_INET))
                 packetFlow.writePacketObjects([packet])
@@ -148,7 +148,7 @@ extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
         }
 
         private func readPackets() {
-                NSLog("--------->start to read packets......")
+//                NSLog("--------->start to read packets......")
                 packetFlow.readPacketObjects { packets in
                         var no:Int = 0
                         for p in packets{
