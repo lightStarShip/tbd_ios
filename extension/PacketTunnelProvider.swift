@@ -45,7 +45,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         return
                                 }
                                 completionHandler(nil)
-                                self.tunIF = Tun2SimpleNewTunnel(self, &err)
+                                self.tunIF = Tun2SimpleNewTunnel(self, 0, &err)
                                 self.readPackets()
                         })
                         
