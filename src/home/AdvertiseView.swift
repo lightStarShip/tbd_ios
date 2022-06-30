@@ -41,12 +41,4 @@ class AdvertiseView: UIView {
                 return view
         }
         
-        public static func initAdViews()->[AdvertiseView]{
-                var ads:[AdvertiseView] = []
-                let AdCache = AdItem.LoadAdItems()
-                for ad in AdCache{
-                        ads.append(AdvertiseView.initItemVew(item: ad))
-                }
-                return ads
-        }
 }

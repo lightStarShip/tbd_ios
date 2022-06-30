@@ -337,35 +337,53 @@ class HomeVC: UIViewController {
                 }
         }}
         
+        public static func initAdViews()->[AdvertiseView]{
+                var ads:[AdvertiseView] = []
+                let AdCache = AdItem.LoadAdItems()
+                for ad in AdCache{
+                        ads.append(AdvertiseView.initItemVew(item: ad))
+                }
+                return ads
+        }
         private func setupAdScrollView(){
-                self.adViews = AdvertiseView.initAdViews()
-                let size = adViews.count
-                if size == 0{
-                        return
+                
+                DispatchQueue.global().async {
+                        let AdCache = AdItem.LoadAdItems()
+                        DispatchQueue.main.async { [self] in
+                                for ad in AdCache{
+                                        adViews.append(AdvertiseView.initItemVew(item: ad))
+                                }
+                                
+                                let size = adViews.count
+                                if size == 0{
+                                        return
+                                }
+                                advertiseLinkSize = size
+                                let onePageSize = adScrollView.frame.size
+                                adScrollView.contentSize = CGSize(width: CGFloat(size) * onePageSize.width,
+                                                                  height: onePageSize.height)
+                                adScrollView.isPagingEnabled = true
+                                
+                                for i in 0 ..< size{
+                                        self.adViews[i].frame = CGRect(x:onePageSize.width * CGFloat(i),
+                                                                       y:0,
+                                                                       width: onePageSize.width,
+                                                                       height: onePageSize.height)
+                                        adScrollView.addSubview(self.adViews[i])
+                                }
+                                
+                                pageControl.numberOfPages = size
+                                pageControl.currentPage = 0
+                                adScrollView.delegate = self
+                                
+                                timer = Timer.scheduledTimer(timeInterval: 5.0,
+                                                             target: self,
+                                                             selector: #selector(adScrollTimer),
+                                                             userInfo: nil,
+                                                             repeats: true)
+                        }
+                        
                 }
-                advertiseLinkSize = size
-                let onePageSize = adScrollView.frame.size
-                adScrollView.contentSize = CGSize(width: CGFloat(size) * onePageSize.width,
-                                                  height: onePageSize.height)
-                adScrollView.isPagingEnabled = true
-                
-                for i in 0 ..< size{
-                        self.adViews[i].frame = CGRect(x:onePageSize.width * CGFloat(i),
-                                                       y:0,
-                                                       width: onePageSize.width,
-                                                       height: onePageSize.height)
-                        adScrollView.addSubview(self.adViews[i])
-                }
-                
-                pageControl.numberOfPages = size
-                pageControl.currentPage = 0
-                adScrollView.delegate = self
-                
-                timer = Timer.scheduledTimer(timeInterval: 5.0,
-                                             target: self,
-                                             selector: #selector(adScrollTimer),
-                                             userInfo: nil,
-                                             repeats: true)
         }
 }
 
