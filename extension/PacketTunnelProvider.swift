@@ -45,7 +45,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         return
                                 }
                                 completionHandler(nil)
-                                self.tunIF = Tun2SimpleNewTunnel(self, 0, &err)
+                                self.tunIF = Tun2SimpleNewTunnel(self, 1, &err)
                                 self.readPackets()
                         })
                         
@@ -119,6 +119,20 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 }
 
 extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
+        
+        func loadRule() -> String {
+                guard let filepath = Bundle.main.path(forResource: "rule", ofType: "txt") else{
+                        NSLog("------>>>failed to find path")
+                        return ""
+                }
+                guard let contents = try? String(contentsOfFile: filepath) else{
+                        NSLog("------>>>failed to read rule txt")
+                        return ""
+                }
+                NSLog("------>>>rule contents:\(contents)")
+                return contents
+        }
+        
         func close() throws {
 //                self.exit()
         }

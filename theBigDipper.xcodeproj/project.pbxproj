@@ -21,6 +21,8 @@
 		693E92D024A8816200149A75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D224A8816200149A75 /* Localizable.strings */; };
 		693E92D624A89A9D00149A75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D824A89A9D00149A75 /* InfoPlist.strings */; };
 		6940EC90240A75460029F526 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940EC8F240A75460029F526 /* ScannerViewController.swift */; };
+		69418EA9286EC587004E667C /* rule.txt in Resources */ = {isa = PBXBuildFile; fileRef = 69418EA8286EC586004E667C /* rule.txt */; };
+		69418EAA286EC8FA004E667C /* rule.txt in Resources */ = {isa = PBXBuildFile; fileRef = 69418EA8286EC586004E667C /* rule.txt */; };
 		694FB26F2682CF590024011A /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB88F2681CAA100524FC6 /* SwiftyJSON.xcframework */; };
 		695E4C392401778600A13631 /* SVN.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 695E4C372401778600A13631 /* SVN.xcdatamodeld */; };
 		696A71EC25146725004EA5DE /* PasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A71EB25146725004EA5DE /* PasswordViewController.swift */; };
@@ -32,7 +34,6 @@
 		696A71FA25149F2E004EA5DE /* NewAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696A71F925149F2E004EA5DE /* NewAccountViewController.swift */; };
 		696B02D425187B8E00F76A51 /* AppSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B02D325187B8E00F76A51 /* AppSetting.swift */; };
 		696B02E9251A079500F76A51 /* RoundedCornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696B02E8251A079500F76A51 /* RoundedCornerView.swift */; };
-		69872F6B286ACBAE0092A17B /* tun2Simple.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0B490A2866C52A00FAA7CF /* tun2Simple.xcframework */; };
 		69872F6D286ACBC00092A17B /* tun2Simple.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B0B490A2866C52A00FAA7CF /* tun2Simple.xcframework */; };
 		698A514323FD58DC00836E26 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698A514223FD58DC00836E26 /* Utils.swift */; };
 		698D07622567700200A55656 /* UserManualViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698D07612567700200A55656 /* UserManualViewController.swift */; };
@@ -125,6 +126,7 @@
 		6940EC8D240A6BA00029F526 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		6940EC8F240A75460029F526 /* ScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewController.swift; sourceTree = "<group>"; };
 		6940EC91240A756D0029F526 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		69418EA8286EC586004E667C /* rule.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = rule.txt; sourceTree = "<group>"; };
 		694A099D2401A1CC001F379C /* CryptoTokenKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoTokenKit.framework; path = System/Library/Frameworks/CryptoTokenKit.framework; sourceTree = SDKROOT; };
 		694FB2732682CF5A0024011A /* CocoaLumberjackSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CocoaLumberjackSwift.xcframework; path = Carthage/Build/CocoaLumberjackSwift.xcframework; sourceTree = "<group>"; };
 		694FB2742682CF5A0024011A /* Resolver.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Resolver.xcframework; path = Carthage/Build/Resolver.xcframework; sourceTree = "<group>"; };
@@ -181,7 +183,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69872F6B286ACBAE0092A17B /* tun2Simple.xcframework in Frameworks */,
 				699BB9082681E30900524FC6 /* AVFoundation.framework in Frameworks */,
 				699BB8DD2681E22D00524FC6 /* SwiftyJSON.xcframework in Frameworks */,
 				2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */,
@@ -335,6 +336,7 @@
 		69E0BEBE240838CA00E0B982 /* common */ = {
 			isa = PBXGroup;
 			children = (
+				69418EA8286EC586004E667C /* rule.txt */,
 				2B0796272849A1F40034E09A /* gfw.js */,
 				696A71EB25146725004EA5DE /* PasswordViewController.swift */,
 				696A71ED251467DA004EA5DE /* QRCodeShowViewController.swift */,
@@ -437,6 +439,7 @@
 				69980C3423F78D3F00829B09 /* Assets.xcassets in Resources */,
 				2B0796282849A1F40034E09A /* gfw.js in Resources */,
 				2B0016A72835D88B00ED4DAC /* AdvertiseView.xib in Resources */,
+				69418EAA286EC8FA004E667C /* rule.txt in Resources */,
 				69980C3223F78D3E00829B09 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -445,6 +448,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69418EA9286EC587004E667C /* rule.txt in Resources */,
 				2B0796292849A1F40034E09A /* gfw.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
