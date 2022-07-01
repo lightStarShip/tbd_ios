@@ -15,6 +15,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let proxyServerPort :UInt16 = 31080
         let proxyServerAddress = "127.0.0.1";
         
+        enum LogLevel:Int8{
+                case debug = 0
+                case info = 1
+                case warn = 2
+                case error = 3
+        }
+        
         var tunIF:Tun2SimpleTunnelProtocol?
         
         var golobal = false
@@ -45,7 +52,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         return
                                 }
                                 completionHandler(nil)
-                                self.tunIF = Tun2SimpleNewTunnel(self, 1, &err)
+                                self.tunIF = Tun2SimpleNewTunnel(self, LogLevel.info.rawValue, &err)
                                 self.readPackets()
                         })
                         
@@ -129,7 +136,7 @@ extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
                         NSLog("------>>>failed to read rule txt")
                         return ""
                 }
-                NSLog("------>>>rule contents:\(contents)")
+//                NSLog("------>>>rule contents:\(contents)")
                 return contents
         }
         
