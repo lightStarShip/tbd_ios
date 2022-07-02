@@ -22,8 +22,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 case error = 3
         }
         
-        var tunIF:Tun2SimpleTunnelProtocol?
-        
         var golobal = false
         override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
                 NSLog("--------->Tunnel start ......")
@@ -34,16 +32,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                         return
                 }
                 do {
-                        try ApiService.pInst.setup(param: ops)
+                        try WalletParam.pInst.setup(param: ops)
                         let settings = try initSetting()
                         self.golobal = (ops["GLOBAL_MODE"] as? Bool == true)
-                        var err:NSError? = nil
                         
-                        if let e = err{
-                                completionHandler(e)
-                                NSLog("--------->startTunnel failed\n[\(e.localizedDescription)]")
-                                return
-                        }
                         self.setTunnelNetworkSettings(settings, completionHandler: {
                                 error in
                                 guard error == nil else{
@@ -51,8 +43,15 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                                         NSLog("--------->setTunnelNetworkSettings err:\(error!.localizedDescription)")
                                         return
                                 }
+                                
+                                var err:NSError? = nil
+                                Tun2SimpleInitEx(self, LogLevel.debug.rawValue, &err)
+                                if err != nil{
+                                        
+                                        completionHandler(err)
+                                        return
+                                }
                                 completionHandler(nil)
-                                self.tunIF = Tun2SimpleNewTunnel(self, LogLevel.info.rawValue, &err)
                                 self.readPackets()
                         })
                         
@@ -125,7 +124,28 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         }
 }
 
-extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
+extension PacketTunnelProvider:Tun2SimpleExtensionIProtocol{
+        
+        func address() -> String {
+                return WalletParam.pInst.selfAddr
+        }
+        
+        func aesKey() -> Data? {
+                return WalletParam.pInst.aesKey
+        }
+        
+        func minerNetAddr() -> String {
+                return WalletParam.pInst.minerNetAddr
+        }
+        
+        func protect(_ fd: Int32) -> Bool {
+                return true
+        }
+        
+        func tunClosed() throws {
+                self.exit()
+        }
+        
         
         func loadRule() -> String {
                 guard let filepath = Bundle.main.path(forResource: "rule", ofType: "txt") else{
@@ -136,21 +156,17 @@ extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
                         NSLog("------>>>failed to read rule txt")
                         return ""
                 }
-//                NSLog("------>>>rule contents:\(contents)")
+                //                NSLog("------>>>rule contents:\(contents)")
                 return contents
         }
         
-        func close() throws {
-//                self.exit()
-        }
-        
-        func write(_ p0: Data?, n: UnsafeMutablePointer<Int>?) throws {
+        func write(toTun p0: Data?, n: UnsafeMutablePointer<Int>?) throws {
                 guard let d = p0 else{
                         NSLog("-------->output data to tun dev is nil......")
-//                        self.exit()
+                        //                        self.exit()
                         return
                 }
-//                NSLog("------>>>prepare to write back to tun written:[\(d)]")
+                //                NSLog("------>>>prepare to write back to tun written:[\(d)]")
                 
                 let packet = NEPacket(data: d, protocolFamily: sa_family_t(AF_INET))
                 packetFlow.writePacketObjects([packet])
@@ -162,22 +178,21 @@ extension PacketTunnelProvider:Tun2SimpleTunnelDevProtocol{
                 }
                 NSLog("-------->\(log)")
         }
-
+        
         private func exit(){
                 NSLog("-------->exit......")
                 Darwin.exit(EXIT_SUCCESS)
         }
-
+        
         private func readPackets() {
-//                NSLog("--------->start to read packets......")
+                //                NSLog("--------->start to read packets......")
                 packetFlow.readPacketObjects { packets in
                         var no:Int = 0
                         for p in packets{
-                                do {
-                                        try self.tunIF?.write(p.data, ret0_: &no)
-//                                        NSLog("------>>>data written:[\(no)]")
-                                } catch let err{
-                                        NSLog("-------->Tun2SimpleInputDevData err[\(err.localizedDescription)]......")
+                                var err:NSError? = nil
+                                Tun2SimpleWritePackets(p.data, &no, &err)
+                                if let e = err{
+                                        NSLog("-------->Tun2SimpleInputDevData err[\(e.localizedDescription)]......")
                                         return
                                 }
                         }
