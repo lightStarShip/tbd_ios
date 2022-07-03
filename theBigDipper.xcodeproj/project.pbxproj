@@ -17,7 +17,6 @@
 		2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
 		69242240240D368F00590536 /* MinerChooseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6924223F240D368F00590536 /* MinerChooseTableViewController.swift */; };
-		693D40402684AB680013832A /* CocoaAsyncSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8752681CA6000524FC6 /* CocoaAsyncSocket.xcframework */; };
 		693E92D024A8816200149A75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D224A8816200149A75 /* Localizable.strings */; };
 		693E92D624A89A9D00149A75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D824A89A9D00149A75 /* InfoPlist.strings */; };
 		6940EC90240A75460029F526 /* ScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6940EC8F240A75460029F526 /* ScannerViewController.swift */; };
@@ -45,8 +44,6 @@
 		69980C3723F78D3F00829B09 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 69980C3523F78D3F00829B09 /* LaunchScreen.storyboard */; };
 		69980C5B23F7B3CD00829B09 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69980C5A23F7B3CD00829B09 /* PacketTunnelProvider.swift */; };
 		69980C6023F7B3CD00829B09 /* vpn.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 69980C5823F7B3CD00829B09 /* vpn.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		699BB8C72681E21600524FC6 /* CocoaAsyncSocket.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8752681CA6000524FC6 /* CocoaAsyncSocket.xcframework */; };
-		699BB8C82681E21600524FC6 /* CocoaAsyncSocket.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8752681CA6000524FC6 /* CocoaAsyncSocket.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		699BB8CF2681E22100524FC6 /* MBProgressHUD.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB87C2681CA7D00524FC6 /* MBProgressHUD.xcframework */; };
 		699BB8D02681E22100524FC6 /* MBProgressHUD.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB87C2681CA7D00524FC6 /* MBProgressHUD.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		699BB8D12681E22300524FC6 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 691CCF9F23F8240D007768DF /* NetworkExtension.framework */; };
@@ -97,7 +94,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				699BB8C82681E21600524FC6 /* CocoaAsyncSocket.xcframework in Embed Frameworks */,
 				2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */,
 				699BB8D02681E22100524FC6 /* MBProgressHUD.xcframework in Embed Frameworks */,
 				699BB8DE2681E22D00524FC6 /* SwiftyJSON.xcframework in Embed Frameworks */,
@@ -186,7 +182,6 @@
 				699BB9082681E30900524FC6 /* AVFoundation.framework in Frameworks */,
 				699BB8DD2681E22D00524FC6 /* SwiftyJSON.xcframework in Frameworks */,
 				2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */,
-				699BB8C72681E21600524FC6 /* CocoaAsyncSocket.xcframework in Frameworks */,
 				699BB8CF2681E22100524FC6 /* MBProgressHUD.xcframework in Frameworks */,
 				699BB8D12681E22300524FC6 /* NetworkExtension.framework in Frameworks */,
 				2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */,
@@ -198,7 +193,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				69872F6D286ACBC00092A17B /* tun2Simple.xcframework in Frameworks */,
-				693D40402684AB680013832A /* CocoaAsyncSocket.xcframework in Frameworks */,
 				694FB26F2682CF590024011A /* SwiftyJSON.xcframework in Frameworks */,
 				2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */,
 			);
