@@ -11,11 +11,11 @@
 		2B0016A92835DA4A00ED4DAC /* AdItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0016A82835DA4A00ED4DAC /* AdItem.swift */; };
 		2B0796282849A1F40034E09A /* gfw.js in Resources */ = {isa = PBXBuildFile; fileRef = 2B0796272849A1F40034E09A /* gfw.js */; };
 		2B0796292849A1F40034E09A /* gfw.js in Resources */ = {isa = PBXBuildFile; fileRef = 2B0796272849A1F40034E09A /* gfw.js */; };
-		2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B30BFBC2844544600A74A83 /* starship.xcframework */; };
 		2B865BCA2835044700B57529 /* AdvertiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B865BC92835044700B57529 /* AdvertiseView.swift */; };
 		2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
 		2BFF8D2B2830F64F00D4414A /* CryptoSwift.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BFF8D2C2830F65C00D4414A /* CryptoSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 699BB8732681CA6000524FC6 /* CryptoSwift.xcframework */; };
+		691354702872BF70001960F9 /* simple.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6913546F2872BF70001960F9 /* simple.xcframework */; };
 		69242240240D368F00590536 /* MinerChooseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6924223F240D368F00590536 /* MinerChooseTableViewController.swift */; };
 		693E92D024A8816200149A75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D224A8816200149A75 /* Localizable.strings */; };
 		693E92D624A89A9D00149A75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 693E92D824A89A9D00149A75 /* InfoPlist.strings */; };
@@ -111,6 +111,7 @@
 		2B30BFBB284441AE00A74A83 /* vpnRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = vpnRelease.entitlements; path = vpn/vpnRelease.entitlements; sourceTree = "<group>"; };
 		2B30BFBC2844544600A74A83 /* starship.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = starship.xcframework; path = bin/starship.xcframework; sourceTree = "<group>"; };
 		2B865BC92835044700B57529 /* AdvertiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseView.swift; sourceTree = "<group>"; };
+		6913546F2872BF70001960F9 /* simple.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = simple.xcframework; path = bin/simple.xcframework; sourceTree = "<group>"; };
 		691B0C3C2869868900AA923A /* tun2socks.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = tun2socks.xcframework; path = bin/tun2socks.xcframework; sourceTree = "<group>"; };
 		691CCF9F23F8240D007768DF /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
 		6924223F240D368F00590536 /* MinerChooseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinerChooseTableViewController.swift; sourceTree = "<group>"; };
@@ -181,10 +182,10 @@
 			files = (
 				699BB9082681E30900524FC6 /* AVFoundation.framework in Frameworks */,
 				699BB8DD2681E22D00524FC6 /* SwiftyJSON.xcframework in Frameworks */,
-				2B30BFBD2844544600A74A83 /* starship.xcframework in Frameworks */,
 				699BB8CF2681E22100524FC6 /* MBProgressHUD.xcframework in Frameworks */,
 				699BB8D12681E22300524FC6 /* NetworkExtension.framework in Frameworks */,
 				2BFF8D2A2830F64F00D4414A /* CryptoSwift.xcframework in Frameworks */,
+				691354702872BF70001960F9 /* simple.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +205,7 @@
 		691CCF9E23F8240D007768DF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6913546F2872BF70001960F9 /* simple.xcframework */,
 				691B0C3C2869868900AA923A /* tun2socks.xcframework */,
 				2B0B490A2866C52A00FAA7CF /* tun2Simple.xcframework */,
 				2B30BFBC2844544600A74A83 /* starship.xcframework */,
@@ -698,7 +700,7 @@
 				CODE_SIGN_ENTITLEMENTS = src/theBigDipper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6A53CAFMZ9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -729,7 +731,7 @@
 				CODE_SIGN_ENTITLEMENTS = src/theBigDipper.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6A53CAFMZ9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -758,7 +760,7 @@
 				CODE_SIGN_ENTITLEMENTS = extension/extension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6A53CAFMZ9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -790,7 +792,7 @@
 				CODE_SIGN_ENTITLEMENTS = vpn/vpnRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 6A53CAFMZ9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

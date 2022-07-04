@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-import Starship
+import Simple
 import SwiftyJSON
 import CryptoSwift
 
@@ -31,7 +31,7 @@ class Wallet:NSObject{
                         return
                 }
                 
-                guard IosLibLoadWallet(jsonStr) else {
+                guard SimpleLoadWallet(jsonStr) else {
                         NSLog("=======>[Wallet init] parse json failed[\(jsonStr)]")
                         return
                 }
@@ -48,7 +48,7 @@ class Wallet:NSObject{
         }
         
         public static func NewInst(auth:String) -> Bool{
-                guard let jsonData = IosLibNewWallet(auth) else{
+                guard let jsonData = SimpleNewWallet(auth) else{
                         return false
                 }
                 populateWallet(data: jsonData)
@@ -74,7 +74,7 @@ class Wallet:NSObject{
         }
         
         public static func ImportWallet(auth:String, josn:String) -> Bool{
-                guard IosLibImportWallet(josn, auth) else {
+                guard SimpleImportWallet(josn, auth) else {
                         return false
                 }
                 populateWallet(data: Data(josn.utf8))
@@ -83,22 +83,22 @@ class Wallet:NSObject{
         }
         
         public func IsOpen() -> Bool{
-                return IosLibIsOpen()
+                return SimpleIsOpen()
         }
         
         public func OpenWallet(auth:String) -> Bool{
-                return IosLibOpenWallet(auth)
+                return SimpleOpenWallet(auth)
         }
         
         public func MainPrikey() -> Data?{
-                return IosLibPriKeyData()
+                return SimplePriKeyData()
         }
         
         public func SubPrikey() -> Data?{
-                return IosLibSubPriKeyData()
+                return SimpleSubPriKeyData()
         }
         
         public func AesKeyWithForMiner(miner:String)->Data?{
-                return IosLibAesKeyForMiner(miner)
+                return SimpleAesKeyForMiner(miner)
         }
 }

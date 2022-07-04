@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Starship
+import Simple
 import SwiftyJSON
 class MinerChooseViewController: UIViewController {
         
@@ -75,7 +75,7 @@ class MinerChooseViewController: UIViewController {
                         }
                         
                         let miner_addr = m_data.addr
-                        guard let ret = IosLibTestPing(miner_addr) else{
+                        guard let ret = SimpleTestPing(miner_addr) else{
                                 m_data.host = "no bas".locStr
                                 return
                         }
@@ -101,7 +101,7 @@ class MinerChooseViewController: UIViewController {
                         dispatchGrp.enter()
                         AppSetting.workQueue.async(group:dispatchGrp) {
                                 defer{ dispatchGrp.leave()}
-                                guard let ret = IosLibTestPing(miner.addr!) else{
+                                guard let ret = SimpleTestPing(miner.addr!) else{
                                         miner.host = "no bas".locStr
                                         return
                                 }

@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-import Starship
+import Simple
 import SwiftyJSON
 
 class Miner : NSObject {
@@ -42,7 +42,7 @@ class Miner : NSObject {
         
         
         public static func SyncMinerListFromBlockChain(){
-                guard let data = IosLibSyncServerList()  else{
+                guard let data = SimpleSyncServerList()  else{
                         print("------>>>empty server list")
                         return
                 }
@@ -94,7 +94,7 @@ class Miner : NSObject {
                 guard let host = m_data.host else{
                         throw HopError.minerErr("invalid miner detail for host".locStr)
                 }
-                let port = IosLibMinerPort(mid)
+                let port = SimpleMinerPort(mid)
                 return (host, port)
         }
 }
